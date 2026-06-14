@@ -1361,6 +1361,7 @@
   }
   #slide-13 .page-num { color: rgba(255,255,255,0.3); }
   #slide-13 .slide-logo { color: rgba(255,255,255,0.3); }
+
 </style>
 </head>
 <body>
@@ -1913,10 +1914,13 @@
         </div>
         <div class="feature-card" id="feat-3">
           <div class="feature-img">
-            <img src="./images/feat_03_version.png" alt="버전 관리"
-                 onerror="this.style.display='none'; this.parentElement.querySelector('.feature-img-placeholder').style.display='flex'">
-            <div class="feature-img-placeholder" style="display:none;">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <video id="feat3-video" src="./video/버전비교최.mp4" loop muted playsinline
+                   style="width:100%; height:100%; object-fit:cover; display:block;"></video>
+            <div id="feat3-overlay" onclick="toggleFeat3()"
+                 style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; cursor:pointer; background:rgba(0,0,0,0.25); transition:opacity 0.25s;">
+              <div style="width:52px; height:52px; border-radius:50%; background:rgba(255,255,255,0.92); display:flex; align-items:center; justify-content:center; box-shadow:0 4px 16px rgba(0,0,0,0.25);">
+                <svg id="feat3-icon" width="20" height="20" viewBox="0 0 24 24" fill="#0B1F4B"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
             </div>
           </div>
           <div class="feature-body">
@@ -2454,6 +2458,10 @@
     if (slideId === 'slide-06') {
       featStep = 0;
       renderFeatureCarousel();
+      const video = document.getElementById('feat3-video');
+      const overlay = document.getElementById('feat3-overlay');
+      if (video) { video.pause(); video.currentTime = 0; }
+      if (overlay) { overlay.style.opacity = '1'; overlay.style.pointerEvents = 'auto'; }
     }
   }
 
@@ -2476,6 +2484,32 @@
       showSlide(current + 1);
     }
   }
+
+  // ── feat3 video: 전체화면 재생 ──
+  function toggleFeat3() {
+    const video = document.getElementById('feat3-video');
+    if (!video) return;
+    const req = video.requestFullscreen || video.webkitRequestFullscreen || video.mozRequestFullScreen;
+    if (req) req.call(video);
+    video.play();
+  }
+
+  document.addEventListener('fullscreenchange', () => {
+    if (!document.fullscreenElement) {
+      const video = document.getElementById('feat3-video');
+      const overlay = document.getElementById('feat3-overlay');
+      if (video) { video.pause(); video.currentTime = 0; }
+      if (overlay) { overlay.style.opacity = '1'; overlay.style.pointerEvents = 'auto'; }
+    }
+  });
+  document.addEventListener('webkitfullscreenchange', () => {
+    if (!document.webkitFullscreenElement) {
+      const video = document.getElementById('feat3-video');
+      const overlay = document.getElementById('feat3-overlay');
+      if (video) { video.pause(); video.currentTime = 0; }
+      if (overlay) { overlay.style.opacity = '1'; overlay.style.pointerEvents = 'auto'; }
+    }
+  });
 
   // ── handle next ──
   function handleNext() {
