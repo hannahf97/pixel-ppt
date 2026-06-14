@@ -882,13 +882,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 24px;
   }
   .pixel-reveal-label {
-    font-size: 28px;
+    font-size: 42px;
     font-weight: 700;
     color: var(--navy);
     text-align: center;
+    line-height: 1.2;
   }
   .pixel-reveal-label span { color: var(--cyan-dark); }
   .pixel-reveal-img {
@@ -906,6 +908,53 @@
   .pixel-reveal-img img {
     width: 100%; height: 100%;
     object-fit: cover;
+  }
+  .pixel-pipeline-embed {
+    width: min(100%, 1160px);
+    flex: 1;
+    background: linear-gradient(180deg, #F7FBFF, #FFFFFF);
+    border-radius: 18px;
+    border: 1px solid rgba(11,31,75,0.08);
+    padding: 30px 24px 24px;
+    box-shadow: 0 18px 36px rgba(11,31,75,0.08);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .pixel-pipeline-embed .slide-title {
+    font-size: 32px;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  .pixel-pipeline-embed .pipeline-flow {
+    padding: 0;
+    min-height: 0;
+    flex: 1;
+    align-items: center;
+  }
+  .pixel-pipeline-embed .pipeline-step-inner {
+    gap: 12px;
+    padding: 0 10px;
+  }
+  .pixel-pipeline-embed .pipeline-icon-box {
+    width: 82px;
+    height: 82px;
+  }
+  .pixel-pipeline-embed .pipeline-step-title {
+    font-size: 14px;
+  }
+  .pixel-pipeline-embed .pipeline-step-desc {
+    font-size: 11px;
+    line-height: 1.5;
+  }
+  .pixel-pipeline-embed .pipeline-tech-badge {
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+  .pixel-pipeline-embed .pipeline-step:not(:last-child)::after {
+    top: 57px;
+    height: 52px;
   }
   .pixel-badges {
     display: flex;
@@ -1023,6 +1072,124 @@
     font-size: 13px;
     line-height: 1.6;
     color: var(--navy);
+  }
+
+  .effect-summary {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    min-height: 0;
+  }
+  .effect-card {
+    position: relative;
+    border-radius: 24px;
+    padding: 22px 22px 20px;
+    background: linear-gradient(180deg, #FFFFFF, #F7FBFF);
+    border: 1px solid rgba(11,31,75,0.08);
+    box-shadow: 0 18px 40px rgba(11,31,75,0.08);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .effect-card::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 5px;
+    background: linear-gradient(180deg, var(--cyan), #74D8D8);
+  }
+  .effect-card.highlight {
+    background: linear-gradient(180deg, #F2FCFC, #FFFFFF);
+    border-color: rgba(10,191,191,0.18);
+  }
+  .effect-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cyan-dark);
+    margin-bottom: 12px;
+  }
+  .effect-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.3;
+    margin-bottom: 12px;
+  }
+  .effect-metric {
+    font-size: 34px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.1;
+  }
+  .effect-metric .accent {
+    color: var(--cyan-dark);
+    display: inline-block;
+    transition: filter 0.35s ease, opacity 0.35s ease, transform 0.35s ease;
+  }
+  .effect-metric .accent.is-hidden {
+    filter: blur(10px);
+    opacity: 0.28;
+    transform: translateY(4px) scale(0.98);
+  }
+  .effect-note {
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--navy-sub);
+    line-height: 1.45;
+  }
+  .effect-media {
+    margin-top: 12px;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(11,31,75,0.08);
+    background: var(--navy-light);
+    height: 110px;
+    min-height: 110px;
+  }
+  .effect-media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .effect-media.compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    height: 110px;
+    min-height: 110px;
+  }
+  .effect-compare-item {
+    position: relative;
+    min-width: 0;
+    overflow: hidden;
+  }
+  .effect-compare-item + .effect-compare-item {
+    border-left: 1px solid rgba(255,255,255,0.9);
+  }
+  .effect-compare-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .effect-compare-label {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: rgba(11,31,75,0.78);
+    color: var(--white);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
   }
 
   /* ── SLIDE 11: ROADMAP ── */
@@ -1653,12 +1820,101 @@
         <div class="pixel-reveal-label">
           PIXEL은 <span>다르게</span> 했습니다.
         </div>
-        <div class="pixel-reveal-img">
-          <img src="./image/compare_pixel.png" alt="PIXEL 화면"
-               onerror="this.style.display='none'; this.parentElement.querySelector('.comp-tool-img-placeholder').style.display='flex'">
-          <div class="comp-tool-img-placeholder" style="display:none; position:absolute; inset:0; background:#E8EDF5; flex-direction:column; align-items:center; justify-content:center; gap:12px; color:#5A6A85; font-size:14px; font-family:'Noto Sans KR',sans-serif;">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#5A6A85" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            compare_pixel.png
+        <div class="pixel-pipeline-embed">
+          <div class="slide-title">말하면, AI가 묻고 그려준다</div>
+          <div class="pipeline-flow">
+
+            <div class="pipeline-step">
+              <div style="position:relative; width:100%;">
+                <div class="pipeline-step-inner">
+                  <div class="pipeline-num">01</div>
+                  <div class="pipeline-icon-box">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#0B1F4B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                  </div>
+                  <div class="pipeline-step-title">요건 입력</div>
+                  <div class="pipeline-step-desc">자연어·Excel·이미지로 화면 필요 기능 자유롭게 입력</div>
+                  <div class="pipeline-tech-badge">Multi-input</div>
+                </div>
+                <div class="pipeline-arrow" style="position:absolute;right:-14px;top:80px;z-index:2;width:28px;height:28px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1.5px solid #0ABFBF;">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2l4 4-4 4" stroke="#0ABFBF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+            </div>
+
+            <div class="pipeline-step highlight">
+              <div style="position:relative; width:100%;">
+                <div class="pipeline-step-inner">
+                  <div class="pipeline-num">02</div>
+                  <div class="pipeline-icon-box">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#07A0A0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
+                    </svg>
+                  </div>
+                  <div class="pipeline-step-title">Q&A 루프</div>
+                  <div class="pipeline-step-desc">AI가 모호성 파악 후 자동 추가 질문 (최대 5회)</div>
+                  <div class="pipeline-tech-badge">LangGraph</div>
+                </div>
+                <div class="pipeline-arrow" style="position:absolute;right:-14px;top:80px;z-index:2;width:28px;height:28px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1.5px solid #0ABFBF;">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2l4 4-4 4" stroke="#0ABFBF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+            </div>
+
+            <div class="pipeline-step">
+              <div style="position:relative; width:100%;">
+                <div class="pipeline-step-inner">
+                  <div class="pipeline-num">03</div>
+                  <div class="pipeline-icon-box">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#0B1F4B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/>
+                      <path d="M12 8v4M8.5 17.5L12 12M15.5 17.5L12 12"/>
+                    </svg>
+                  </div>
+                  <div class="pipeline-step-title">온톨로지 추출</div>
+                  <div class="pipeline-step-desc">자연어 요건을 구조화된 화면 스펙으로 변환</div>
+                  <div class="pipeline-tech-badge">Claude Sonnet</div>
+                </div>
+                <div class="pipeline-arrow" style="position:absolute;right:-14px;top:80px;z-index:2;width:28px;height:28px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1.5px solid #0ABFBF;">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2l4 4-4 4" stroke="#0ABFBF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+            </div>
+
+            <div class="pipeline-step highlight">
+              <div style="position:relative; width:100%;">
+                <div class="pipeline-step-inner">
+                  <div class="pipeline-num">04</div>
+                  <div class="pipeline-icon-box">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#07A0A0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="3" width="18" height="18" rx="2"/><rect x="7" y="7" width="4" height="4"/><rect x="13" y="7" width="4" height="2"/><rect x="13" y="11" width="4" height="2"/><rect x="7" y="13" width="10" height="4"/>
+                    </svg>
+                  </div>
+                  <div class="pipeline-step-title">목업 생성</div>
+                  <div class="pipeline-step-desc">React 코드로 변환, SSE 스트리밍 실시간 미리보기</div>
+                  <div class="pipeline-tech-badge">React + SSE</div>
+                </div>
+                <div class="pipeline-arrow" style="position:absolute;right:-14px;top:80px;z-index:2;width:28px;height:28px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1.5px solid #0ABFBF;">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2l4 4-4 4" stroke="#0ABFBF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+            </div>
+
+            <div class="pipeline-step">
+              <div class="pipeline-step-inner">
+                <div class="pipeline-num">05</div>
+                <div class="pipeline-icon-box">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#0B1F4B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+                  </svg>
+                </div>
+                <div class="pipeline-step-title">리뷰 & 자산화</div>
+                <div class="pipeline-step-desc">승인 워크플로우 진행 · 버전 이력 · GraphRAG 재사용</div>
+                <div class="pipeline-tech-badge">GraphRAG</div>
+              </div>
+            </div>
+
           </div>
         </div>
         <div class="pixel-badges">
@@ -1672,112 +1928,6 @@
       </div>
       <div class="slide-logo">PIXEL</div>
       <div class="page-num">09 / 14</div>
-    </div>
-  </div>
-
-  <!-- ──────────────────────────────────────── -->
-  <!-- SLIDE 06: AI PIPELINE -->
-  <!-- ──────────────────────────────────────── -->
-  <div class="slide" id="slide-04">
-    <div class="slide-inner">
-      <div class="eyebrow">AI Pipeline</div>
-      <div class="slide-title">말하면, AI가 묻고 그려준다</div>
-      <div class="pipeline-flow">
-
-        <div class="pipeline-step">
-          <div style="position:relative; width:100%;">
-            <div class="pipeline-step-inner">
-              <div class="pipeline-num">01</div>
-              <div class="pipeline-icon-box">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#0B1F4B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                </svg>
-              </div>
-              <div class="pipeline-step-title">요건 입력</div>
-              <div class="pipeline-step-desc">자연어·Excel·이미지로 화면 필요 기능 자유롭게 입력</div>
-              <div class="pipeline-tech-badge">Multi-input</div>
-            </div>
-            <div class="pipeline-arrow" style="position:absolute;right:-14px;top:80px;z-index:2;width:28px;height:28px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1.5px solid #0ABFBF;">
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2l4 4-4 4" stroke="#0ABFBF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-          </div>
-        </div>
-
-        <div class="pipeline-step highlight">
-          <div style="position:relative; width:100%;">
-            <div class="pipeline-step-inner">
-              <div class="pipeline-num">02</div>
-              <div class="pipeline-icon-box">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#07A0A0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
-                </svg>
-              </div>
-              <div class="pipeline-step-title">Q&A 루프</div>
-              <div class="pipeline-step-desc">AI가 모호성 파악 후 자동 추가 질문 (최대 5회)</div>
-              <div class="pipeline-tech-badge">LangGraph</div>
-            </div>
-            <div class="pipeline-arrow" style="position:absolute;right:-14px;top:80px;z-index:2;width:28px;height:28px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1.5px solid #0ABFBF;">
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2l4 4-4 4" stroke="#0ABFBF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-          </div>
-        </div>
-
-        <div class="pipeline-step">
-          <div style="position:relative; width:100%;">
-            <div class="pipeline-step-inner">
-              <div class="pipeline-num">03</div>
-              <div class="pipeline-icon-box">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#0B1F4B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/>
-                  <path d="M12 8v4M8.5 17.5L12 12M15.5 17.5L12 12"/>
-                </svg>
-              </div>
-              <div class="pipeline-step-title">온톨로지 추출</div>
-              <div class="pipeline-step-desc">자연어 요건을 구조화된 화면 스펙으로 변환</div>
-              <div class="pipeline-tech-badge">Claude Sonnet</div>
-            </div>
-            <div class="pipeline-arrow" style="position:absolute;right:-14px;top:80px;z-index:2;width:28px;height:28px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1.5px solid #0ABFBF;">
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2l4 4-4 4" stroke="#0ABFBF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-          </div>
-        </div>
-
-        <div class="pipeline-step highlight">
-          <div style="position:relative; width:100%;">
-            <div class="pipeline-step-inner">
-              <div class="pipeline-num">04</div>
-              <div class="pipeline-icon-box">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#07A0A0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="3" y="3" width="18" height="18" rx="2"/><rect x="7" y="7" width="4" height="4"/><rect x="13" y="7" width="4" height="2"/><rect x="13" y="11" width="4" height="2"/><rect x="7" y="13" width="10" height="4"/>
-                </svg>
-              </div>
-              <div class="pipeline-step-title">목업 생성</div>
-              <div class="pipeline-step-desc">React 코드로 변환, SSE 스트리밍 실시간 미리보기</div>
-              <div class="pipeline-tech-badge">React + SSE</div>
-            </div>
-            <div class="pipeline-arrow" style="position:absolute;right:-14px;top:80px;z-index:2;width:28px;height:28px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1.5px solid #0ABFBF;">
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2l4 4-4 4" stroke="#0ABFBF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-          </div>
-        </div>
-
-        <div class="pipeline-step">
-          <div class="pipeline-step-inner">
-            <div class="pipeline-num">05</div>
-            <div class="pipeline-icon-box">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#0B1F4B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
-              </svg>
-            </div>
-            <div class="pipeline-step-title">리뷰 & 자산화</div>
-            <div class="pipeline-step-desc">승인 워크플로우 진행 · 버전 이력 · GraphRAG 재사용</div>
-            <div class="pipeline-tech-badge">GraphRAG</div>
-          </div>
-        </div>
-
-      </div>
-      <div class="slide-logo">PIXEL</div>
-      <div class="page-num">05 / 14</div>
     </div>
   </div>
 
@@ -1877,6 +2027,9 @@
   </div>
 
   <!-- ──────────────────────────────────────── -->
+  <!-- SLIDE 10: BEFORE / AFTER -->
+  <!-- ──────────────────────────────────────── -->
+  <!-- ──────────────────────────────────────── -->
   <!-- SLIDE 07: FEATURES (animated) -->
   <!-- ──────────────────────────────────────── -->
   <div class="slide" id="slide-06">
@@ -1886,7 +2039,7 @@
       <div class="features-grid" id="features-grid">
         <div class="feature-card" id="feat-1">
           <div class="feature-img">
-            <img src="./images/feat_01_generate.png" alt="화면 생성"
+            <img src="./image/feat_01_generate.png" alt="화면 생성"
                  onerror="this.style.display='none'; this.parentElement.querySelector('.feature-img-placeholder').style.display='flex'">
             <div class="feature-img-placeholder" style="display:none;">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
@@ -1900,7 +2053,7 @@
         </div>
         <div class="feature-card" id="feat-2">
           <div class="feature-img">
-            <img src="./images/feat_02_qa.png" alt="Q&A 루프"
+            <img src="./image/feat_02_qa.png" alt="Q&A 루프"
                  onerror="this.style.display='none'; this.parentElement.querySelector('.feature-img-placeholder').style.display='flex'">
             <div class="feature-img-placeholder" style="display:none;">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
@@ -1931,7 +2084,7 @@
         </div>
         <div class="feature-card" id="feat-4">
           <div class="feature-img">
-            <img src="./images/feat_04_workflow.png" alt="워크플로우"
+            <img src="./image/feat_04_workflow.png" alt="워크플로우"
                  onerror="this.style.display='none'; this.parentElement.querySelector('.feature-img-placeholder').style.display='flex'">
             <div class="feature-img-placeholder" style="display:none;">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
@@ -1945,7 +2098,7 @@
         </div>
         <div class="feature-card" id="feat-5">
           <div class="feature-img">
-            <img src="./images/feat_05_export.png" alt="PPT Export"
+            <img src="./image/feat_05_export.png" alt="PPT Export"
                  onerror="this.style.display='none'; this.parentElement.querySelector('.feature-img-placeholder').style.display='flex'">
             <div class="feature-img-placeholder" style="display:none;">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
@@ -1964,95 +2117,71 @@
     </div>
   </div>
 
-  <!-- ──────────────────────────────────────── -->
-  <!-- SLIDE 10: BEFORE / AFTER -->
-  <!-- ──────────────────────────────────────── -->
   <div class="slide" id="slide-09">
     <div class="slide-inner">
       <div class="eyebrow">Impact</div>
-      <div class="slide-title" style="margin-bottom:14px;">이전 방식과 PIXEL, 결과물이 이렇게 달라집니다</div>
+      <div class="slide-title" style="margin-bottom:14px;">화면설계, 이렇게 달라집니다</div>
       <div class="slide-subtitle" style="font-size:18px; margin-bottom:24px;">
         화면 초안 작성부터 검토 승인, 화면설계서 생성까지 실제 결과물 기준으로 비교했습니다.
       </div>
-      <div class="impact-compare">
-        <div class="impact-row">
-          <div class="impact-topic">
-            <div class="impact-topic-num">01</div>
-            <div class="impact-topic-title">화면 초안 작성</div>
+      <div class="effect-summary">
+        <div class="effect-card highlight">
+          <div>
+            <div class="effect-label">Effect 01</div>
+            <div class="effect-title">화면 초안 작성</div>
           </div>
-          <div class="impact-card before">
-            <div class="impact-card-head">
-              <div class="impact-card-label">이전 방식</div>
-              <div class="impact-card-caption">실제 화면 초안</div>
+          <div>
+            <div class="effect-metric"><span class="accent countup" data-target="10" data-suffix="분">10분</span> 이내</div>
+            <div class="effect-note">초안 작성에 하루를 쓰던 흐름에서, 대화형 생성으로 바로 검토 가능한 첫 화면을 확보합니다.</div>
+            <div class="effect-media">
+              <img src="./image/ui_pixel.png" alt="PIXEL 생성 화면">
             </div>
-            <div class="impact-card-media">
-              <img src="./ui_real.png" alt="이전 방식 화면 초안">
-            </div>
-            <div class="impact-card-note">사람이 직접 화면 초안을 만들고 다시 다듬어야 해서 시작 단계부터 시간이 오래 걸립니다.</div>
-          </div>
-          <div class="impact-card after">
-            <div class="impact-card-head">
-              <div class="impact-card-label">PIXEL</div>
-              <div class="impact-card-caption">AI 생성 초안</div>
-            </div>
-            <div class="impact-card-media">
-              <img src="./ui_pixel.png" alt="PIXEL 생성 화면">
-            </div>
-            <div class="impact-card-note">자연어만으로 바로 초안을 만들고, 수정 논의에 더 빨리 들어갈 수 있습니다.</div>
           </div>
         </div>
-
-        <div class="impact-row">
-          <div class="impact-topic">
-            <div class="impact-topic-num">02</div>
-            <div class="impact-topic-title">요구사항 검토 승인</div>
+        <div class="effect-card">
+          <div>
+            <div class="effect-label">Effect 02</div>
+            <div class="effect-title">검토 및 승인 왕복 시간</div>
           </div>
-          <div class="impact-card before">
-            <div class="impact-card-head">
-              <div class="impact-card-label">이전 방식</div>
-              <div class="impact-card-caption">메신저 확인 요청</div>
+          <div>
+            <div class="effect-metric"><span class="accent countup" data-target="50" data-suffix="%">50%</span> 단축</div>
+            <div class="effect-note">검토 요청, 피드백, 승인 이력을 한 흐름으로 묶어 커뮤니케이션 왕복 비용을 줄입니다.</div>
+            <div class="effect-media">
+              <img src="./image/history_pixel.png" alt="PIXEL 검토 승인 이력">
             </div>
-            <div class="impact-card-media">
-              <img src="./history_pixel.png" alt="메신저 확인 요청">
-            </div>
-            <div class="impact-card-note">검토와 승인 요청이 메시지에 흩어져 누가 무엇을 확인했는지 추적이 어렵습니다.</div>
-          </div>
-          <div class="impact-card after">
-            <div class="impact-card-head">
-              <div class="impact-card-label">PIXEL</div>
-              <div class="impact-card-caption">히스토리 기반 승인</div>
-            </div>
-            <div class="impact-card-media">
-              <img src="./history_pixel.png" alt="PIXEL 검토 승인 이력">
-            </div>
-            <div class="impact-card-note">검토 요청과 승인 이력이 한곳에 남아 흐름과 변경 내역을 함께 확인할 수 있습니다.</div>
           </div>
         </div>
-
-        <div class="impact-row">
-          <div class="impact-topic">
-            <div class="impact-topic-num">03</div>
-            <div class="impact-topic-title">화면설계서 파일 자동생성</div>
+        <div class="effect-card">
+          <div>
+            <div class="effect-label">Effect 03</div>
+            <div class="effect-title">화면설계서 파일 작성시간</div>
           </div>
-          <div class="impact-card before">
-            <div class="impact-card-head">
-              <div class="impact-card-label">이전 방식</div>
-              <div class="impact-card-caption">수작업 PPT 작성</div>
+          <div>
+            <div class="effect-metric"><span class="accent countup" data-start="8" data-target="0" data-suffix="시간">0시간</span></div>
+            <div class="effect-note">목업과 스펙을 바탕으로 설계서 산출물까지 자동 생성해 별도 문서 작성 단계를 없앱니다.</div>
+            <div class="effect-media">
+              <img src="./image/ppt_pixel.png" alt="PIXEL 자동 PPT 생성">
             </div>
-            <div class="impact-card-media">
-              <img src="./ppt_real.png" alt="이전 방식 PPT 작성">
-            </div>
-            <div class="impact-card-note">최종 설계서도 사람이 다시 만들고 정리해야 해서 마무리 작업이 길어집니다.</div>
           </div>
-          <div class="impact-card after">
-            <div class="impact-card-head">
-              <div class="impact-card-label">PIXEL</div>
-              <div class="impact-card-caption">자동 PPT 생성</div>
+        </div>
+        <div class="effect-card highlight">
+          <div>
+            <div class="effect-label">Effect 04</div>
+            <div class="effect-title">목업 생성 품질 향상</div>
+          </div>
+          <div>
+            <div class="effect-metric">유사도 <span class="accent countup" data-target="90" data-suffix="%">90%</span></div>
+            <div class="effect-note">기존 설계 결과물과 높은 수준으로 유사한 초안을 빠르게 생성해 수정 부담을 낮춥니다.</div>
+            <div class="effect-media compare">
+              <div class="effect-compare-item">
+                <span class="effect-compare-label">기존</span>
+                <img src="./image/ui_real.png" alt="기존 방식 화면 초안">
+              </div>
+              <div class="effect-compare-item">
+                <span class="effect-compare-label">PIXEL</span>
+                <img src="./image/ui_pixel.png" alt="PIXEL 생성 화면">
+              </div>
             </div>
-            <div class="impact-card-media">
-              <img src="./ppt_pixel.png" alt="PIXEL 자동 PPT 생성">
-            </div>
-            <div class="impact-card-note">생성된 화면과 스펙을 바탕으로 공유 가능한 PPT까지 자동으로 생성합니다.</div>
           </div>
         </div>
       </div>
@@ -2343,7 +2472,7 @@
           </div>
         </div>
         <div class="team-card">
-          <div class="team-avatar"><img src="./images/shim.png" alt="심경보" class="remove-bg"></div>
+          <div class="team-avatar"><img src="./image/shim.png" alt="심경보" class="remove-bg"></div>
           <div class="team-info">
             <div class="team-name-row">
               <span class="team-name">심경보</span>
@@ -2396,6 +2525,7 @@
 
   // ── feature animation state ──
   let featStep = 0;
+  let impactStep = 0;
   const featCards = [
     document.getElementById('feat-1'),
     document.getElementById('feat-2'),
@@ -2404,6 +2534,16 @@
     document.getElementById('feat-5'),
   ];
   const featHint = document.getElementById('features-hint');
+  const impactMetrics = Array.from(document.querySelectorAll('#slide-09 .countup'));
+
+  function updatePageNumbers() {
+    const total = slides.length;
+    slides.forEach((slide, index) => {
+      const pageNum = slide.querySelector('.page-num');
+      if (!pageNum) return;
+      pageNum.textContent = `${String(index + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
+    });
+  }
 
   // ── progress bar ──
   function updateProgress() {
@@ -2446,6 +2586,70 @@
     requestAnimationFrame(step);
   }
 
+  function animateCountValue(el, duration = 1200) {
+    const startValue = Number(el.dataset.start ?? 0);
+    const targetValue = Number(el.dataset.target ?? 0);
+    const suffix = el.dataset.suffix ?? '';
+    const prefix = el.dataset.prefix ?? '';
+    const start = performance.now();
+
+    function step(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const value = Math.round(startValue + (targetValue - startValue) * eased);
+      el.textContent = `${prefix}${value}${suffix}`;
+      if (progress < 1) requestAnimationFrame(step);
+    }
+
+    el.textContent = `${prefix}${startValue}${suffix}`;
+    requestAnimationFrame(step);
+  }
+
+  function animateImpactMetrics() {
+    document.querySelectorAll('#slide-09 .countup').forEach((el, index) => {
+      setTimeout(() => animateCountValue(el, 1100), index * 120);
+    });
+  }
+
+  function resetImpactMetrics() {
+    impactStep = 0;
+    impactMetrics.forEach((el) => {
+      const targetValue = Number(el.dataset.target ?? 0);
+      const suffix = el.dataset.suffix ?? '';
+      const prefix = el.dataset.prefix ?? '';
+      el.textContent = `${prefix}${targetValue}${suffix}`;
+      el.classList.add('is-hidden');
+    });
+  }
+
+  function revealNextImpactMetric() {
+    if (impactStep >= impactMetrics.length) {
+      showSlide(current + 1);
+      return;
+    }
+
+    const el = impactMetrics[impactStep];
+    el.classList.remove('is-hidden');
+    animateCountValue(el, 900);
+    impactStep++;
+  }
+
+  function hidePrevImpactMetric() {
+    if (impactStep <= 0) {
+      showSlide(current - 1);
+      return;
+    }
+
+    impactStep--;
+    const el = impactMetrics[impactStep];
+    const targetValue = Number(el.dataset.target ?? 0);
+    const suffix = el.dataset.suffix ?? '';
+    const prefix = el.dataset.prefix ?? '';
+    el.textContent = `${prefix}${targetValue}${suffix}`;
+    el.classList.add('is-hidden');
+  }
+
   // ── on-enter animations per slide ──
   function onSlideEnter(idx) {
     const slideId = getCurrentSlideId(idx);
@@ -2462,6 +2666,10 @@
       const overlay = document.getElementById('feat3-overlay');
       if (video) { video.pause(); video.currentTime = 0; }
       if (overlay) { overlay.style.opacity = '1'; overlay.style.pointerEvents = 'auto'; }
+    }
+
+    if (slideId === 'slide-09') {
+      resetImpactMetrics();
     }
   }
 
@@ -2515,6 +2723,7 @@
   function handleNext() {
     const slideId = getCurrentSlideId();
     if (slideId === 'slide-06') { revealNextFeature(); return; }
+    if (slideId === 'slide-09') { revealNextImpactMetric(); return; }
     showSlide(current + 1);
   }
 
@@ -2523,6 +2732,10 @@
     if (getCurrentSlideId() === 'slide-06' && featStep > 0) {
       featStep--;
       renderFeatureCarousel();
+      return;
+    }
+    if (getCurrentSlideId() === 'slide-09') {
+      hidePrevImpactMetric();
       return;
     }
     showSlide(current - 1);
@@ -2547,6 +2760,7 @@
   });
 
   renderFeatureCarousel();
+  updatePageNumbers();
   updateProgress();
 
   // ── black background remover ──
