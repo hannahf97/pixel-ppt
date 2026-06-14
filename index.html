@@ -711,25 +711,65 @@
     background: var(--white);
   }
   .features-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 16px;
+    position: relative;
     flex: 1;
-  }
-  .feature-card {
-    background: var(--bg);
-    border-radius: 14px;
-    border: 0.5px solid var(--border);
+    min-height: 0;
     overflow: hidden;
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    perspective: 1200px;
+  }
+  .feature-card {
+    position: absolute;
+    width: min(820px, 78vw);
+    background: linear-gradient(180deg, #FFFFFF, #F7FBFF);
+    border-radius: 26px;
+    border: 1px solid rgba(11,31,75,0.08);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    opacity: 0;
+    transform: translateX(0) scale(0.78);
+    transform-origin: center center;
+    transition: transform 0.45s ease, opacity 0.45s ease, box-shadow 0.45s ease;
+    pointer-events: none;
+    box-shadow: 0 24px 54px rgba(11,31,75,0.12);
+  }
+  .feature-card.active {
+    opacity: 1;
+    transform: translateX(0) scale(1.51);
+    z-index: 4;
+    box-shadow: 0 34px 76px rgba(11,31,75,0.18);
+  }
+  .feature-card.prev,
+  .feature-card.next {
+    opacity: 0.5;
+    z-index: 3;
+  }
+  .feature-card.prev {
+    transform: translateX(-50%) scale(0.8) rotateY(14deg);
+  }
+  .feature-card.next {
+    transform: translateX(50%) scale(0.8) rotateY(-14deg);
+  }
+  .feature-card.far-prev,
+  .feature-card.far-next {
+    opacity: 0.18;
+    z-index: 2;
+  }
+  .feature-card.far-prev {
+    transform: translateX(-74%) scale(0.68);
+  }
+  .feature-card.far-next {
+    transform: translateX(74%) scale(0.68);
   }
   .feature-img {
-    width: 100%;
-    aspect-ratio: 16/9;
+    width: 56%;
     background: var(--navy-light);
     overflow: hidden;
     position: relative;
+    min-height: 360px;
   }
   .feature-img img {
     width: 100%; height: 100%;
@@ -743,33 +783,34 @@
     background: var(--navy);
   }
   .feature-body {
-    padding: 16px;
-    flex: 1;
+    padding: 28px 28px 30px;
+    width: 44%;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    justify-content: center;
+    gap: 10px;
   }
   .feature-num {
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 700;
     color: var(--cyan-dark);
     letter-spacing: 0.08em;
   }
   .feature-name {
-    font-size: 14px;
+    font-size: 30px;
     font-weight: 700;
     color: var(--navy);
   }
   .feature-desc {
-    font-size: 12px;
+    font-size: 15px;
     color: var(--navy-sub);
-    line-height: 1.5;
+    line-height: 1.7;
   }
   .features-hint {
     text-align: center;
-    font-size: 13px;
+    font-size: 14px;
     color: var(--navy-sub);
-    margin-top: 12px;
+    margin-top: 18px;
   }
 
   /* ── SLIDE 08: COMPARISON (Jobs style) ── */
@@ -881,94 +922,107 @@
     border-radius: 20px;
   }
 
-  /* ── SLIDE 10: BEFORE/AFTER ── */
-  .ba-layout {
-    display: grid;
-    grid-template-columns: 1fr 80px 1fr;
-    gap: 0;
+  /* ── SLIDE 10: VISUAL COMPARISON ── */
+  .impact-compare {
     flex: 1;
-    align-items: center;
-  }
-  .ba-side {
-    padding: 32px;
-    border-radius: 16px;
-    height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 18px;
+    min-height: 0;
+  }
+  .impact-row {
+    display: grid;
+    grid-template-columns: 190px 1fr 1fr;
+    gap: 18px;
+    align-items: stretch;
+    min-height: 0;
+  }
+  .impact-topic {
+    border-radius: 20px;
+    background: linear-gradient(180deg, #0B1F4B, #15356A);
+    color: var(--white);
+    padding: 22px 20px;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
+    box-shadow: 0 18px 36px rgba(11,31,75,0.18);
   }
-  .ba-before {
-    background: var(--bg);
-    border: 0.5px solid var(--border);
-  }
-  .ba-after {
-    background: var(--navy);
-  }
-  .ba-label {
+  .impact-topic-num {
     font-size: 12px;
     font-weight: 700;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 10px;
+  }
+  .impact-topic-title {
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .impact-card {
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(11,31,75,0.08);
+    background: var(--white);
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    box-shadow: 0 16px 36px rgba(11,31,75,0.08);
+  }
+  .impact-card.before {
+    background: linear-gradient(180deg, #FFFFFF, #F7F9FC);
+  }
+  .impact-card.after {
+    background: linear-gradient(180deg, #F5FCFC, #EBFAFA);
+    border-color: rgba(10,191,191,0.18);
+  }
+  .impact-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 18px;
+    border-bottom: 1px solid rgba(11,31,75,0.08);
+  }
+  .impact-card.before .impact-card-head {
+    background: #F3F6FB;
+  }
+  .impact-card.after .impact-card-head {
+    background: rgba(10,191,191,0.08);
+  }
+  .impact-card-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    margin-bottom: 8px;
   }
-  .ba-before .ba-label { color: var(--navy-sub); }
-  .ba-after .ba-label { color: var(--cyan); }
-  .ba-items {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  .ba-item {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-  .ba-item-label {
+  .impact-card.before .impact-card-label { color: var(--navy-sub); }
+  .impact-card.after .impact-card-label { color: var(--cyan-dark); }
+  .impact-card-caption {
     font-size: 12px;
-    font-weight: 500;
-  }
-  .ba-before .ba-item-label { color: var(--navy-sub); }
-  .ba-after .ba-item-label { color: rgba(255,255,255,0.5); }
-  .ba-item-value {
-    font-size: 26px;
-    font-weight: 700;
-    line-height: 1.1;
-  }
-  .ba-before .ba-item-value { color: var(--navy); }
-  .ba-after .ba-item-value { color: var(--white); }
-  .ba-after .ba-item-value.cyan { color: var(--cyan); }
-  .ba-arrow-col {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-  }
-  .ba-arrow-circle {
-    width: 52px; height: 52px;
-    border-radius: 50%;
-    background: var(--cyan);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .ba-saving {
-    text-align: center;
-    margin-top: 24px;
-    padding: 20px;
-    background: var(--cyan-light);
-    border-radius: 12px;
-  }
-  .ba-saving-num {
-    font-size: 48px;
-    font-weight: 700;
-    color: var(--cyan-dark);
-  }
-  .ba-saving-label {
-    font-size: 14px;
     color: var(--navy-sub);
-    margin-top: 4px;
+    text-align: right;
+  }
+  .impact-card-media {
+    flex: 1;
+    min-height: 170px;
+    background: var(--navy-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+  .impact-card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .impact-card-note {
+    padding: 14px 18px 16px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--navy);
   }
 
   /* ── SLIDE 11: ROADMAP ── */
@@ -1831,7 +1885,7 @@
       <div class="features-grid" id="features-grid">
         <div class="feature-card" id="feat-1">
           <div class="feature-img">
-            <img src="./image/feat_01_generate.png" alt="화면 생성"
+            <img src="./images/feat_01_generate.png" alt="화면 생성"
                  onerror="this.style.display='none'; this.parentElement.querySelector('.feature-img-placeholder').style.display='flex'">
             <div class="feature-img-placeholder" style="display:none;">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
@@ -1845,7 +1899,7 @@
         </div>
         <div class="feature-card" id="feat-2">
           <div class="feature-img">
-            <img src="./image/feat_02_qa.png" alt="Q&A 루프"
+            <img src="./images/feat_02_qa.png" alt="Q&A 루프"
                  onerror="this.style.display='none'; this.parentElement.querySelector('.feature-img-placeholder').style.display='flex'">
             <div class="feature-img-placeholder" style="display:none;">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
@@ -1859,7 +1913,7 @@
         </div>
         <div class="feature-card" id="feat-3">
           <div class="feature-img">
-            <img src="./image/feat_03_version.png" alt="버전 관리"
+            <img src="./images/feat_03_version.png" alt="버전 관리"
                  onerror="this.style.display='none'; this.parentElement.querySelector('.feature-img-placeholder').style.display='flex'">
             <div class="feature-img-placeholder" style="display:none;">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
@@ -1873,7 +1927,7 @@
         </div>
         <div class="feature-card" id="feat-4">
           <div class="feature-img">
-            <img src="./image/feat_04_workflow.png" alt="워크플로우"
+            <img src="./images/feat_04_workflow.png" alt="워크플로우"
                  onerror="this.style.display='none'; this.parentElement.querySelector('.feature-img-placeholder').style.display='flex'">
             <div class="feature-img-placeholder" style="display:none;">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
@@ -1887,7 +1941,7 @@
         </div>
         <div class="feature-card" id="feat-5">
           <div class="feature-img">
-            <img src="./image/feat_05_export.png" alt="PPT Export"
+            <img src="./images/feat_05_export.png" alt="PPT Export"
                  onerror="this.style.display='none'; this.parentElement.querySelector('.feature-img-placeholder').style.display='flex'">
             <div class="feature-img-placeholder" style="display:none;">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
@@ -1900,6 +1954,7 @@
           </div>
         </div>
       </div>
+      <div class="features-hint" id="features-hint">→ 키를 눌러 주요 기능을 넘겨보세요</div>
       <div class="slide-logo">PIXEL</div>
       <div class="page-num">07 / 14</div>
     </div>
@@ -1911,68 +1966,89 @@
   <div class="slide" id="slide-09">
     <div class="slide-inner">
       <div class="eyebrow">Impact</div>
-      <div class="slide-title" style="margin-bottom:14px;">이전 방식과 PIXEL, 이렇게 다릅니다</div>
-      <div class="slide-subtitle" style="font-size:18px; margin-bottom:28px;">
-        같은 화면 설계라도, 만드는 과정과 협업 경험은 완전히 달라집니다.
+      <div class="slide-title" style="margin-bottom:14px;">이전 방식과 PIXEL, 결과물이 이렇게 달라집니다</div>
+      <div class="slide-subtitle" style="font-size:18px; margin-bottom:24px;">
+        화면 초안 작성부터 검토 승인, 화면설계서 생성까지 실제 결과물 기준으로 비교했습니다.
       </div>
-      <div class="ba-layout">
-        <div class="ba-side ba-before" id="ba-before-side">
-          <div class="ba-label">BEFORE · 이전 방식</div>
-          <div class="ba-items">
-            <div class="ba-item">
-              <div class="ba-item-label">화면 초안 작성</div>
-              <div class="ba-item-value">3~4시간 / 화면</div>
+      <div class="impact-compare">
+        <div class="impact-row">
+          <div class="impact-topic">
+            <div class="impact-topic-num">01</div>
+            <div class="impact-topic-title">화면 초안 작성</div>
+          </div>
+          <div class="impact-card before">
+            <div class="impact-card-head">
+              <div class="impact-card-label">이전 방식</div>
+              <div class="impact-card-caption">실제 화면 초안</div>
             </div>
-            <div class="ba-item">
-              <div class="ba-item-label">요구사항 검토·승인</div>
-              <div class="ba-item-value">8시간 이상</div>
+            <div class="impact-card-media">
+              <img src="./ui_real.png" alt="이전 방식 화면 초안">
             </div>
-            <div class="ba-item">
-              <div class="ba-item-label">수정 반복 횟수</div>
-              <div class="ba-item-value">4~5회 반복</div>
+            <div class="impact-card-note">사람이 직접 화면 초안을 만들고 다시 다듬어야 해서 시작 단계부터 시간이 오래 걸립니다.</div>
+          </div>
+          <div class="impact-card after">
+            <div class="impact-card-head">
+              <div class="impact-card-label">PIXEL</div>
+              <div class="impact-card-caption">AI 생성 초안</div>
             </div>
-            <div class="ba-item">
-              <div class="ba-item-label">AI 기반 목업 생성</div>
-              <div class="ba-item-value">불가</div>
+            <div class="impact-card-media">
+              <img src="./ui_pixel.png" alt="PIXEL 생성 화면">
             </div>
-            <div class="ba-item">
-              <div class="ba-item-label">화면 1건 완료까지</div>
-              <div class="ba-item-value" style="font-size:32px; color:#E24B4A;">최소 11시간</div>
-            </div>
+            <div class="impact-card-note">자연어만으로 바로 초안을 만들고, 수정 논의에 더 빨리 들어갈 수 있습니다.</div>
           </div>
         </div>
-        <div class="ba-arrow-col" id="ba-arrow-col" style="opacity:0; transition:opacity 0.5s ease;">
-          <div class="ba-arrow-circle">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+
+        <div class="impact-row">
+          <div class="impact-topic">
+            <div class="impact-topic-num">02</div>
+            <div class="impact-topic-title">요구사항 검토 승인</div>
           </div>
-          <div class="ba-saving" style="background:transparent; padding:8px 0;">
-            <div class="ba-saving-num" id="ba-pct">0%</div>
-            <div class="ba-saving-label" style="font-size:12px; color:#5A6A85;">시간 절감</div>
+          <div class="impact-card before">
+            <div class="impact-card-head">
+              <div class="impact-card-label">이전 방식</div>
+              <div class="impact-card-caption">메신저 확인 요청</div>
+            </div>
+            <div class="impact-card-media">
+              <img src="./history_pixel.png" alt="메신저 확인 요청">
+            </div>
+            <div class="impact-card-note">검토와 승인 요청이 메시지에 흩어져 누가 무엇을 확인했는지 추적이 어렵습니다.</div>
+          </div>
+          <div class="impact-card after">
+            <div class="impact-card-head">
+              <div class="impact-card-label">PIXEL</div>
+              <div class="impact-card-caption">히스토리 기반 승인</div>
+            </div>
+            <div class="impact-card-media">
+              <img src="./history_pixel.png" alt="PIXEL 검토 승인 이력">
+            </div>
+            <div class="impact-card-note">검토 요청과 승인 이력이 한곳에 남아 흐름과 변경 내역을 함께 확인할 수 있습니다.</div>
           </div>
         </div>
-        <div class="ba-side ba-after" id="ba-after-side" style="opacity:0; transition:opacity 0.5s ease 0.3s;">
-          <div class="ba-label">AFTER · PIXEL</div>
-          <div class="ba-items">
-            <div class="ba-item">
-              <div class="ba-item-label">화면 초안 작성</div>
-              <div class="ba-item-value cyan">10분 이내</div>
+
+        <div class="impact-row">
+          <div class="impact-topic">
+            <div class="impact-topic-num">03</div>
+            <div class="impact-topic-title">화면설계서 파일 자동생성</div>
+          </div>
+          <div class="impact-card before">
+            <div class="impact-card-head">
+              <div class="impact-card-label">이전 방식</div>
+              <div class="impact-card-caption">수작업 PPT 작성</div>
             </div>
-            <div class="ba-item">
-              <div class="ba-item-label">요구사항 검토·승인</div>
-              <div class="ba-item-value">50% 단축</div>
+            <div class="impact-card-media">
+              <img src="./ppt_real.png" alt="이전 방식 PPT 작성">
             </div>
-            <div class="ba-item">
-              <div class="ba-item-label">수정 반복 횟수</div>
-              <div class="ba-item-value cyan">2회 이내</div>
+            <div class="impact-card-note">최종 설계서도 사람이 다시 만들고 정리해야 해서 마무리 작업이 길어집니다.</div>
+          </div>
+          <div class="impact-card after">
+            <div class="impact-card-head">
+              <div class="impact-card-label">PIXEL</div>
+              <div class="impact-card-caption">자동 PPT 생성</div>
             </div>
-            <div class="ba-item">
-              <div class="ba-item-label">AI 기반 목업 생성</div>
-              <div class="ba-item-value cyan">98%</div>
+            <div class="impact-card-media">
+              <img src="./ppt_pixel.png" alt="PIXEL 자동 PPT 생성">
             </div>
-            <div class="ba-item">
-              <div class="ba-item-label">화면 1건 완료까지</div>
-              <div class="ba-item-value" style="font-size:32px; color:#0ABFBF;">약 4시간 10분</div>
-            </div>
+            <div class="impact-card-note">생성된 화면과 스펙을 바탕으로 공유 가능한 PPT까지 자동으로 생성합니다.</div>
           </div>
         </div>
       </div>
@@ -2183,12 +2259,12 @@
               </div>
             </div>
             <div class="journey-shot">
-              <img src="./image/screenshot_12.png" alt="작업 스크린샷 12">
+              <img src="./스크린샷 2026-05-24 오후 2.13.09.png" alt="작업 스크린샷 12">
               
             </div>
 
             <div class="journey-shot">
-              <img src="./image/screenshot_07.png" alt="작업 스크린샷 7 반복">
+              <img src="./스크린샷 2026-05-24 오후 2.09.04.png" alt="작업 스크린샷 7 반복">
               <div class="journey-shot-body">
                 <div class="journey-shot-step">STEP 07</div>
                 <div class="journey-shot-title">대시보드 시야 확보</div>
@@ -2196,7 +2272,7 @@
               </div>
             </div>
             <div class="journey-shot">
-              <img src="./image/screenshot_08.png" alt="작업 스크린샷 8 반복">
+              <img src="./스크린샷 2026-05-24 오후 2.10.31.png" alt="작업 스크린샷 8 반복">
               <div class="journey-shot-body">
                 <div class="journey-shot-step">STEP 08</div>
                 <div class="journey-shot-title">수정 포인트 재정의</div>
@@ -2263,7 +2339,7 @@
           </div>
         </div>
         <div class="team-card">
-          <div class="team-avatar"><img src="./image/shim.png" alt="심경보" class="remove-bg"></div>
+          <div class="team-avatar"><img src="./images/shim.png" alt="심경보" class="remove-bg"></div>
           <div class="team-info">
             <div class="team-name-row">
               <span class="team-name">심경보</span>
@@ -2314,8 +2390,16 @@
   const slides = Array.from(document.querySelectorAll('.slide'));
   let current = 0;
 
-  // ── before/after state ──
-  let baRevealed = false;
+  // ── feature animation state ──
+  let featStep = 0;
+  const featCards = [
+    document.getElementById('feat-1'),
+    document.getElementById('feat-2'),
+    document.getElementById('feat-3'),
+    document.getElementById('feat-4'),
+    document.getElementById('feat-5'),
+  ];
+  const featHint = document.getElementById('features-hint');
 
   // ── progress bar ──
   function updateProgress() {
@@ -2325,6 +2409,24 @@
 
   function getCurrentSlideId(idx = current) {
     return slides[idx] ? slides[idx].id : '';
+  }
+
+  function renderFeatureCarousel() {
+    featCards.forEach((card, idx) => {
+      if (!card) return;
+      card.classList.remove('active', 'prev', 'next', 'far-prev', 'far-next');
+      if (idx === featStep) card.classList.add('active');
+      else if (idx === featStep - 1) card.classList.add('prev');
+      else if (idx === featStep + 1) card.classList.add('next');
+      else if (idx < featStep - 1) card.classList.add('far-prev');
+      else if (idx > featStep + 1) card.classList.add('far-next');
+    });
+
+    if (featHint) {
+      featHint.textContent = featStep === featCards.length - 1
+        ? '마지막 기능입니다 → 한 번 더 누르면 다음 슬라이드로 이동합니다'
+        : `${featStep + 1} / ${featCards.length} · → 키로 다음 기능 보기`;
+    }
   }
 
   // ── count-up animation ──
@@ -2340,19 +2442,6 @@
     requestAnimationFrame(step);
   }
 
-  // ── percent count-up ──
-  function countUpPct(el, target, duration) {
-    const start = performance.now();
-    function step(now) {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      el.textContent = Math.round(eased * target) + '%';
-      if (progress < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }
-
   // ── on-enter animations per slide ──
   function onSlideEnter(idx) {
     const slideId = getCurrentSlideId(idx);
@@ -2362,14 +2451,9 @@
       if (el) { el.textContent = '0'; setTimeout(() => countUp(el, 11, 1200), 300); }
     }
 
-    if (slideId === 'slide-09') {
-      baRevealed = false;
-      const arrow = document.getElementById('ba-arrow-col');
-      const after = document.getElementById('ba-after-side');
-      const pct = document.getElementById('ba-pct');
-      if (arrow) arrow.style.opacity = '0';
-      if (after) after.style.opacity = '0';
-      if (pct) pct.textContent = '0%';
+    if (slideId === 'slide-06') {
+      featStep = 0;
+      renderFeatureCarousel();
     }
   }
 
@@ -2383,16 +2467,11 @@
     onSlideEnter(current);
   }
 
-  // ── BA reveal ──
-  function revealBA() {
-    if (!baRevealed) {
-      baRevealed = true;
-      const arrow = document.getElementById('ba-arrow-col');
-      const after = document.getElementById('ba-after-side');
-      const pct = document.getElementById('ba-pct');
-      if (arrow) arrow.style.opacity = '1';
-      if (after) after.style.opacity = '1';
-      if (pct) setTimeout(() => countUpPct(pct, 62, 900), 200);
+  // ── feature reveal ──
+  function revealNextFeature() {
+    if (featStep < featCards.length - 1) {
+      featStep++;
+      renderFeatureCarousel();
     } else {
       showSlide(current + 1);
     }
@@ -2400,12 +2479,18 @@
 
   // ── handle next ──
   function handleNext() {
-    if (getCurrentSlideId() === 'slide-09') { revealBA(); return; }
+    const slideId = getCurrentSlideId();
+    if (slideId === 'slide-06') { revealNextFeature(); return; }
     showSlide(current + 1);
   }
 
   // ── handle prev ──
   function handlePrev() {
+    if (getCurrentSlideId() === 'slide-06' && featStep > 0) {
+      featStep--;
+      renderFeatureCarousel();
+      return;
+    }
     showSlide(current - 1);
   }
 
@@ -2427,6 +2512,7 @@
     if (dx > 50) handlePrev();
   });
 
+  renderFeatureCarousel();
   updateProgress();
 
   // ── black background remover ──
