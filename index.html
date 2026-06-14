@@ -723,13 +723,6 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-  }
-  .feature-card.revealed {
-    opacity: 1;
-    transform: translateY(0);
   }
   .feature-img {
     width: 100%;
@@ -1396,7 +1389,6 @@
           <div class="problem-card-copy">
             <div class="problem-card-topline">
               <div class="problem-card-index">01</div>
-              <div class="problem-card-label">Delay</div>
             </div>
             <div class="problem-card-title">작업 지연</div>
             <div class="problem-card-desc">PPT로 화면 요건을 직접 작성하며, 반복 수정에 시간을 계속 소모합니다.</div>
@@ -1410,7 +1402,6 @@
           <div class="problem-card-copy">
             <div class="problem-card-topline">
               <div class="problem-card-index">02</div>
-              <div class="problem-card-label">Communication</div>
             </div>
             <div class="problem-card-title">소통 병목</div>
             <div class="problem-card-desc">현업과 설계자 사이의 도메인 이해 차이로 요구사항 전달과 해석이 계속 어긋납니다.</div>
@@ -1424,7 +1415,6 @@
           <div class="problem-card-copy">
             <div class="problem-card-topline">
               <div class="problem-card-index">03</div>
-              <div class="problem-card-label">Distributed History</div>
             </div>
             <div class="problem-card-title">분산된 이력</div>
             <div class="problem-card-desc">메일, Teams, 통화에 흩어진 대화 이력 때문에 변경 내역을 추적하기 어렵습니다.</div>
@@ -1438,7 +1428,6 @@
           <div class="problem-card-copy">
             <div class="problem-card-topline">
               <div class="problem-card-index">04</div>
-              <div class="problem-card-label">Reuse Failure</div>
             </div>
             <div class="problem-card-title">자산화 실패</div>
             <div class="problem-card-desc">과거 설계 자산이 남지 않아 유사화면도 매번 처음부터 다시 만들어야 합니다.</div>
@@ -1905,7 +1894,6 @@
           </div>
         </div>
       </div>
-      <div class="features-hint" id="features-hint">→ 키를 눌러 기능을 하나씩 확인하세요</div>
       <div class="slide-logo">PIXEL</div>
       <div class="page-num">07 / 14</div>
     </div>
@@ -2320,17 +2308,6 @@
   const slides = Array.from(document.querySelectorAll('.slide'));
   let current = 0;
 
-  // ── feature animation state ──
-  let featStep = 0;
-  const featCards = [
-    document.getElementById('feat-1'),
-    document.getElementById('feat-2'),
-    document.getElementById('feat-3'),
-    document.getElementById('feat-4'),
-    document.getElementById('feat-5'),
-  ];
-  const featHint = document.getElementById('features-hint');
-
   // ── before/after state ──
   let baRevealed = false;
 
@@ -2379,12 +2356,6 @@
       if (el) { el.textContent = '0'; setTimeout(() => countUp(el, 11, 1200), 300); }
     }
 
-    if (slideId === 'slide-06') {
-      featStep = 0;
-      featCards.forEach(c => c.classList.remove('revealed'));
-      if (featHint) featHint.style.display = 'block';
-    }
-
     if (slideId === 'slide-09') {
       baRevealed = false;
       const arrow = document.getElementById('ba-arrow-col');
@@ -2406,21 +2377,6 @@
     onSlideEnter(current);
   }
 
-  // ── feature reveal ──
-  function revealNextFeature() {
-    if (featStep < featCards.length) {
-      featCards[featStep].classList.add('revealed');
-      featStep++;
-      if (featHint) {
-        featHint.textContent = featStep === featCards.length
-          ? '모든 기능이 공개되었습니다 → 다음 슬라이드로'
-          : `${featStep} / 5 공개됨 · → 키로 계속`;
-      }
-    } else {
-      showSlide(current + 1);
-    }
-  }
-
   // ── BA reveal ──
   function revealBA() {
     if (!baRevealed) {
@@ -2438,19 +2394,12 @@
 
   // ── handle next ──
   function handleNext() {
-    const slideId = getCurrentSlideId();
-    if (slideId === 'slide-06') { revealNextFeature(); return; }
-    if (slideId === 'slide-09') { revealBA(); return; }
+    if (getCurrentSlideId() === 'slide-09') { revealBA(); return; }
     showSlide(current + 1);
   }
 
   // ── handle prev ──
   function handlePrev() {
-    if (getCurrentSlideId() === 'slide-06' && featStep > 0) {
-      featStep--;
-      featCards[featStep].classList.remove('revealed');
-      return;
-    }
     showSlide(current - 1);
   }
 
