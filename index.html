@@ -359,25 +359,134 @@
   /* ── SLIDE 03: PROBLEM ── */
   .problem-header {
     margin-bottom: 36px;
+    transition: all 0.4s ease;
   }
   .problem-big-num {
-    font-size: 100px;
-    font-weight: 700;
+    font-size: 132px;
+    font-weight: 800;
     color: var(--navy);
     line-height: 1;
     display: flex;
     align-items: baseline;
     gap: 12px;
+    transition: opacity 0.3s ease, transform 0.4s ease;
+  }
+  .problem-big-num #count-hours {
+    color: var(--cyan-dark);
+    text-shadow: 0 8px 22px rgba(10,191,191,0.18);
   }
   .problem-big-num span {
-    font-size: 28px;
+    font-size: 65px;
     color: var(--navy-sub);
-    font-weight: 400;
+    font-weight: 600;
   }
   .problem-sub {
-    font-size: 18px;
+    font-size: 30px;
     color: var(--navy-sub);
     margin-top: 8px;
+    transition: transform 0.4s ease, text-align 0.4s ease, max-width 0.4s ease;
+  }
+  .problem-header.is-center {
+    position: absolute;
+    top: 50%;
+    left: 80px;
+    right: 80px;
+    width: auto;
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transform: translateY(-50%);
+    z-index: 2;
+  }
+  .problem-header.is-center .problem-big-num {
+    width: 100%;
+    justify-content: center;
+    margin: 0 auto;
+  }
+  .problem-header.is-center .problem-sub {
+    width: 100%;
+    text-align: center;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .problem-header.is-center.problem-stage-0 .problem-big-num {
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+  }
+  .problem-header.is-center.problem-stage-1 .problem-big-num {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .problem-header.is-center.problem-stage-2 {
+    top: 150px;
+    transform: none;
+  }
+  .problem-header.is-center.problem-stage-2 .problem-big-num {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .problem-breakdown {
+    position: absolute;
+    top: 320px;
+    left: 50%;
+    width: min(720px, calc(100% - 160px));
+    padding: 30px 34px;
+    border-radius: 28px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(244,250,255,0.98));
+    border: 1px solid rgba(11,31,75,0.08);
+    box-shadow: 0 18px 48px rgba(11,31,75,0.12);
+    transform: translateX(-50%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.4s ease;
+    z-index: 2;
+  }
+  .problem-breakdown.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+  .problem-breakdown-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--navy);
+    margin-bottom: 16px;
+  }
+  .problem-breakdown-list {
+    display: grid;
+    gap: 14px;
+  }
+  .problem-breakdown-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(11,31,75,0.08);
+  }
+  .problem-breakdown-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .problem-breakdown-label {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .problem-breakdown-value {
+    font-size: 30px;
+    font-weight: 800;
+    color: var(--cyan-dark);
+    white-space: nowrap;
+  }
+  .problem-cards.is-hidden {
+    opacity: 0;
+    pointer-events: none;
   }
 
   .problem-cards {
@@ -1538,7 +1647,7 @@
     display: block;
     width: 100%;
     height: 250px;
-    object-fit: cover;
+    object-fit: contain;
     background: #DCE7F5;
   }
   .journey-shot-body {
@@ -1792,7 +1901,24 @@
         <div class="problem-big-num">
           <span id="count-hours">0</span><span>시간</span>
         </div>
-        <div class="problem-sub">한 화면, 하루가 사라진다 — 단 1개의 화면 요건을 확정하기까지 낭비되는 최소 시간</div>
+        <div class="problem-sub">한 화면, 하루가 사라진다 — 단 1개의 화면을 설계하기까지 낭비되는 평균 시간</div>
+      </div>
+      <div class="problem-breakdown">
+        <div class="problem-breakdown-title">기본방식</div>
+        <div class="problem-breakdown-list">
+          <div class="problem-breakdown-row">
+            <div class="problem-breakdown-label">요건작성시간</div>
+            <div class="problem-breakdown-value">3~4시간</div>
+          </div>
+          <div class="problem-breakdown-row">
+            <div class="problem-breakdown-label">검토, 승인 왕복</div>
+            <div class="problem-breakdown-value">8시간 이상</div>
+          </div>
+          <div class="problem-breakdown-row">
+            <div class="problem-breakdown-label">수정 사이클</div>
+            <div class="problem-breakdown-value">4~5회 반복</div>
+          </div>
+        </div>
       </div>
       <div class="problem-cards">
         <div class="problem-card">
@@ -1836,13 +1962,13 @@
         </div>
         <div class="problem-card">
           <div class="problem-card-visual">
-            <img src="./image/version.png" alt="자산화 실패">
+            <img src="./image/version.png" alt="반복된 재작업">
           </div>
           <div class="problem-card-copy">
             <div class="problem-card-topline">
               <div class="problem-card-index">04</div>
             </div>
-            <div class="problem-card-title">자산화 실패</div>
+            <div class="problem-card-title">반복된 재작업</div>
             <div class="problem-card-desc">과거 설계 자산이 남지 않아 유사화면도 매번 처음부터 다시 만들어야 합니다.</div>
             <div class="problem-card-accent"></div>
           </div>
@@ -2556,6 +2682,66 @@
               
             </div>
           </div>
+
+          <div class="journey-row">
+            <div class="journey-shot">
+              <img src="./image/screenshot_18.png" alt="작업 스크린샷 18">
+            </div>
+            <div class="journey-shot">
+              <img src="./image/screenshot_13.png" alt="작업 스크린샷 13">
+            </div>
+            <div class="journey-shot">
+              <img src="./image/screenshot_21.png" alt="작업 스크린샷 21">
+            </div>
+            <div class="journey-shot">
+              <img src="./image/screenshot_15.png" alt="작업 스크린샷 15">
+            </div>
+            <div class="journey-shot">
+              <img src="./image/screenshot_19.png" alt="작업 스크린샷 19">
+            </div>
+            <div class="journey-shot">
+              <img src="./image/screenshot_14.png" alt="작업 스크린샷 14">
+            </div>
+            <div class="journey-shot">
+              <img src="./image/screenshot_22.png" alt="작업 스크린샷 22">
+            </div>
+            <div class="journey-shot">
+              <img src="./image/screenshot_17.png" alt="작업 스크린샷 17">
+            </div>
+            <div class="journey-shot">
+              <img src="./image/screenshot_20.png" alt="작업 스크린샷 20">
+            </div>
+          </div>
+
+          <div class="journey-row reverse">
+            <div class="journey-shot">
+              <img src="./image/screenshot_27.png" alt="작업 스크린샷 27">
+            </div>
+            <div class="journey-shot">
+              <img src="./image/screenshot_24.png" alt="작업 스크린샷 24">
+            </div>
+            <div class="journey-shot">
+              <img src="./image/screenshot_30.png" alt="작업 스크린샷 30">
+            </div>
+            <div class="journey-shot">
+              <img src="./image/screenshot_23.jpeg" alt="작업 스크린샷 23">
+            </div>
+            <div class="journey-shot">
+              <img src="./image/screenshot_28.png" alt="작업 스크린샷 28">
+            </div>
+            <div class="journey-shot">
+              <img src="./image/screenshot_25.png" alt="작업 스크린샷 25">
+            </div>
+            <div class="journey-shot">
+              <img src="./image/screenshot_29.png" alt="작업 스크린샷 29">
+            </div>
+            <div class="journey-shot">
+              <img src="./image/screenshot_26.png" alt="작업 스크린샷 26">
+            </div>
+            <div class="journey-shot">
+              <img src="./image/screenshot_16.png" alt="작업 스크린샷 16">
+            </div>
+          </div>
         </div>
       </div>
       <div class="slide-logo">PIXEL</div>
@@ -2595,6 +2781,7 @@
   let current = 0;
 
   // ── feature animation state ──
+  let problemIntroStage = 0;
   let problemStep = -1;
   let featStep = 0;
   let impactStep = 0;
@@ -2634,6 +2821,21 @@
   }
 
   function renderProblemCards() {
+    const problemHeader = document.querySelector('#slide-02 .problem-header');
+    const problemBreakdown = document.querySelector('#slide-02 .problem-breakdown');
+    const problemCardsWrap = document.querySelector('#slide-02 .problem-cards');
+    if (problemHeader) {
+      problemHeader.classList.toggle('is-center', problemIntroStage < 3);
+      problemHeader.classList.toggle('problem-stage-0', problemIntroStage === 0);
+      problemHeader.classList.toggle('problem-stage-1', problemIntroStage === 1);
+      problemHeader.classList.toggle('problem-stage-2', problemIntroStage === 2);
+    }
+    if (problemBreakdown) {
+      problemBreakdown.classList.toggle('is-visible', problemIntroStage === 2);
+    }
+    if (problemCardsWrap) {
+      problemCardsWrap.classList.toggle('is-hidden', problemIntroStage < 3);
+    }
     problemCards.forEach((card, index) => {
       if (!card) return;
       card.classList.toggle('revealed', index <= problemStep);
@@ -2874,7 +3076,8 @@
 
     if (slideId === 'slide-02') {
       const el = document.getElementById('count-hours');
-      if (el) { el.textContent = '0'; setTimeout(() => countUp(el, 11, 1200), 300); }
+      if (el) { el.textContent = '0'; }
+      problemIntroStage = 0;
       problemStep = -1;
       renderProblemCards();
     }
@@ -2937,7 +3140,22 @@
   function handleNext() {
     const slideId = getCurrentSlideId();
     if (slideId === 'slide-02') {
-      if (problemStep < problemCards.length - 1) {
+      if (problemIntroStage === 0) {
+        problemIntroStage = 1;
+        renderProblemCards();
+        const el = document.getElementById('count-hours');
+        if (el) {
+          el.textContent = '0';
+          setTimeout(() => countUp(el, 11, 900), 60);
+        }
+      } else if (problemIntroStage === 1) {
+        problemIntroStage = 2;
+        renderProblemCards();
+      } else if (problemIntroStage === 2 && problemStep < problemCards.length - 1) {
+        problemIntroStage = 3;
+        problemStep = 0;
+        renderProblemCards();
+      } else if (problemStep < problemCards.length - 1) {
         problemStep++;
         renderProblemCards();
       } else {
