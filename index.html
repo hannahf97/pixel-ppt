@@ -376,18 +376,18 @@
   }
 
   .problem-cards {
-    position: relative;
     flex: 1;
-    min-height: 0;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    perspective: 1200px;
+    min-height: 520px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+    align-content: stretch;
+    overflow: visible;
   }
   .problem-card {
-    position: absolute;
-    width: min(980px, 82vw);
+    position: relative;
+    min-height: 0;
     background: linear-gradient(180deg, #FFFFFF, #F8FBFF);
     border-radius: 22px;
     border: 1px solid rgba(11,31,75,0.08);
@@ -397,28 +397,31 @@
     gap: 22px;
     align-items: stretch;
     overflow: hidden;
-    opacity: 0;
-    transform: translateX(0) scale(0.76);
-    transition: transform 0.45s ease, opacity 0.45s ease, box-shadow 0.45s ease;
-    pointer-events: none;
+    transform: translate(0, 0) scale(1);
+    transition: transform 0.48s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.48s ease;
     box-shadow: 0 16px 34px rgba(11,31,75,0.08);
+    transform-origin: center center;
   }
   .problem-card.active {
-    opacity: 1;
-    transform: translateX(0) scale(1.08);
-    z-index: 4;
-    pointer-events: auto;
-    box-shadow: 0 28px 62px rgba(11,31,75,0.16);
+    transform: translate(var(--problem-focus-x), var(--problem-focus-y)) scale(1.18);
+    box-shadow: 0 34px 70px rgba(11,31,75,0.18);
+    z-index: 5;
   }
-  .problem-card.prev {
-    opacity: 0.2;
-    transform: translateX(-54%) scale(0.82) rotateY(12deg);
-    z-index: 3;
+  .problem-card:nth-child(1) {
+    --problem-focus-x: 260px;
+    --problem-focus-y: 150px;
   }
-  .problem-card.next {
-    opacity: 0.2;
-    transform: translateX(54%) scale(0.82) rotateY(-12deg);
-    z-index: 3;
+  .problem-card:nth-child(2) {
+    --problem-focus-x: -260px;
+    --problem-focus-y: 150px;
+  }
+  .problem-card:nth-child(3) {
+    --problem-focus-x: 260px;
+    --problem-focus-y: -150px;
+  }
+  .problem-card:nth-child(4) {
+    --problem-focus-x: -260px;
+    --problem-focus-y: -150px;
   }
   .problem-card-visual {
     width: 100%;
@@ -1104,13 +1107,16 @@
 
   .effect-summary {
     flex: 1;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 18px;
+    position: relative;
     min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
   }
   .effect-card {
-    position: relative;
+    position: absolute;
+    width: min(1200px, 92vw);
     border-radius: 24px;
     padding: 22px 22px 20px;
     background: linear-gradient(180deg, #FFFFFF, #F7FBFF);
@@ -1121,13 +1127,38 @@
     justify-content: space-between;
     min-height: 0;
     overflow: hidden;
+    min-height: 500px;
+    opacity: 0;
+    transform: translateX(80px) scale(0.96);
+    transition: transform 0.42s ease, opacity 0.42s ease, box-shadow 0.42s ease;
+    pointer-events: none;
+  }
+  .effect-card.active {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    box-shadow: 0 26px 58px rgba(11,31,75,0.14);
+    pointer-events: auto;
+    z-index: 4;
+  }
+  .effect-card.exit-left {
+    opacity: 0;
+    transform: translateX(-80px) scale(0.96);
+  }
+  .effect-card.exit-right {
+    opacity: 0;
+    transform: translateX(80px) scale(0.96);
   }
   .effect-card-content {
     display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(180px, 0.8fr);
-    gap: 14px;
+    grid-template-columns: minmax(0, 1.18fr) minmax(260px, 0.82fr);
+    gap: 16px;
     align-items: stretch;
     min-height: 0;
+    flex: 1;
+  }
+  .effect-card-content.media-bottom {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
   }
   .effect-card-copy {
     min-width: 0;
@@ -1152,14 +1183,14 @@
     margin-bottom: 12px;
   }
   .effect-title {
-    font-size: 24px;
+    font-size: 25px;
     font-weight: 700;
     color: var(--navy);
     line-height: 1.3;
     margin-bottom: 12px;
   }
   .effect-metric {
-    font-size: 34px;
+    font-size: 36px;
     font-weight: 700;
     color: var(--navy);
     line-height: 1.1;
@@ -1174,11 +1205,39 @@
     opacity: 0.28;
     transform: translateY(4px) scale(0.98);
   }
+  .effect-before-value,
+  .effect-after-value {
+    display: inline-flex;
+    align-items: baseline;
+    transition: opacity 0.28s ease, transform 0.28s ease;
+  }
+  .effect-metric.swap-metric {
+    position: relative;
+    display: inline-flex;
+    align-items: baseline;
+    white-space: nowrap;
+  }
+  .effect-metric.swap-metric .effect-after-value {
+    position: absolute;
+    left: 0;
+    top: 0;
+    white-space: nowrap;
+  }
+  .effect-after-value.is-hidden {
+    opacity: 0;
+    transform: translateY(4px);
+    pointer-events: none;
+  }
+  .effect-before-value.is-hidden {
+    opacity: 0;
+    transform: translateY(4px) scale(0.98);
+    pointer-events: none;
+  }
   .effect-note {
     margin-top: 10px;
-    font-size: 12px;
+    font-size: 13px;
     color: var(--navy-sub);
-    line-height: 1.45;
+    line-height: 1.5;
   }
   .effect-media {
     border-radius: 14px;
@@ -1186,14 +1245,15 @@
     border: 1px solid rgba(11,31,75,0.08);
     background: var(--navy-light);
     height: 100%;
-    min-height: 160px;
+    min-height: 250px;
     align-self: stretch;
   }
   .effect-media img {
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    background: #EEF3FA;
   }
   .effect-media.compare {
     display: grid;
@@ -1206,7 +1266,16 @@
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
     height: 100%;
-    min-height: 160px;
+    min-height: 250px;
+  }
+  .effect-card-content.media-bottom .effect-media.compare.vertical {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    min-height: 170px;
+  }
+  .effect-card-content.media-bottom .effect-media.compare.vertical .effect-compare-item + .effect-compare-item {
+    border-top: none;
+    border-left: 1px solid rgba(255,255,255,0.9);
   }
   .effect-compare-item {
     position: relative;
@@ -1223,8 +1292,9 @@
   .effect-compare-item img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
+    background: #EEF3FA;
   }
   .effect-compare-label {
     position: absolute;
@@ -1640,6 +1710,62 @@
   </div>
 
   <!-- ──────────────────────────────────────── -->
+  <!-- SLIDE 12: TEAM -->
+  <!-- ──────────────────────────────────────── -->
+  <div class="slide" id="slide-12">
+    <div class="slide-inner">
+      <div class="eyebrow">Team</div>
+      <div class="slide-title">이 팀이 만들었습니다</div>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-avatar"><img src="./image/kim.png" alt="김지현"></div>
+          <div class="team-info">
+            <div class="team-name-row">
+              <span class="team-name">김지현</span>
+              <span class="team-dept">선강DX섹션</span>
+            </div>
+            <div class="team-works">
+              <div class="team-work-item">요구사항 구조화 및 온톨로지 설계</div>
+              <div class="team-work-item">LangGraph 기반 Q&A 자동화</div>
+              <div class="team-work-item">AI 목업 생성 파이프라인 구현</div>
+            </div>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar"><img src="./image/heo.png" alt="허도원"></div>
+          <div class="team-info">
+            <div class="team-name-row">
+              <span class="team-name">허도원</span>
+              <span class="team-dept">선강DX섹션</span>
+            </div>
+            <div class="team-works">
+              <div class="team-work-item">MES 맞춤 템플릿 및 생성 규칙 설계</div>
+              <div class="team-work-item">도메인 특화 화면 생성 품질 고도화</div>
+              <div class="team-work-item">Gamma API 기반 PPT 내보내기 자동화</div>
+            </div>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar"><img src="./image/shim.png" alt="심경보" ></div>
+          <div class="team-info">
+            <div class="team-name-row">
+              <span class="team-name">심경보</span>
+              <span class="team-dept">선강DX섹션</span>
+            </div>
+            <div class="team-works">
+              <div class="team-work-item">협업 중심 대시보드 UI 설계 및 구현</div>
+              <div class="team-work-item">핵심 화면 UX/UI 일관성 설계</div>
+              <div class="team-work-item">의사결정 속도를 높이는 사용자 경험 개선</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-logo">PIXEL</div>
+      <div class="page-num">13 / 14</div>
+    </div>
+  </div>
+
+  <!-- ──────────────────────────────────────── -->
   <!-- SLIDE INTRO: 영상 -->
   <!-- ──────────────────────────────────────── -->
   <div class="slide" id="slide-intro" style="position:relative;">
@@ -1827,7 +1953,7 @@
         <div class="comp-tool">
           <div class="comp-tool-header">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B1F4B" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M8 8h8M8 16h5"/></svg>
-            <span class="comp-tool-name">PPT + ECM</span>
+            <span class="comp-tool-name">PPT</span>
             <span class="comp-tool-pain">필요하건 필요하지 않건, 무조건 수작업</span>
           </div>
           <div class="comp-tool-img">
@@ -2175,7 +2301,7 @@
           </div>
           <div class="effect-card-content">
             <div class="effect-card-copy">
-              <div class="effect-metric"><span class="accent countup" data-target="10" data-suffix="분">10분</span> 이내</div>
+              <div class="effect-metric swap-metric"><span class="effect-before-value">4시간</span><span class="effect-after-value"><span class="accent countup" data-target="10" data-suffix="분">10분</span> 이내</span></div>
               <div class="effect-note">초안 작성에 하루를 쓰던 흐름에서, 대화형 생성으로 바로 검토 가능한 첫 화면을 확보합니다.</div>
             </div>
             <div class="effect-media">
@@ -2205,7 +2331,7 @@
           </div>
           <div class="effect-card-content">
             <div class="effect-card-copy">
-              <div class="effect-metric"><span class="accent countup" data-start="8" data-target="0" data-suffix="시간">1분</span></div>
+              <div class="effect-metric"><span class="accent countup" data-start="8" data-target="2" data-suffix="분">2분</span></div>
               <div class="effect-note">목업과 스펙을 바탕으로 설계서 산출물까지 자동 생성해 별도 문서 작성 단계를 없앱니다.</div>
             </div>
             <div class="effect-media">
@@ -2218,7 +2344,7 @@
             <div class="effect-label">Effect 04</div>
             <div class="effect-title">목업 생성 품질 향상</div>
           </div>
-          <div class="effect-card-content">
+          <div class="effect-card-content media-bottom">
             <div class="effect-card-copy">
               <div class="effect-metric">유사도 <span class="accent countup" data-target="90" data-suffix="%">90%</span></div>
               <div class="effect-note">기존 설계 결과물과 높은 수준으로 유사한 초안을 빠르게 생성해 수정 부담을 낮춥니다.</div>
@@ -2483,62 +2609,6 @@
     </div>
   </div>
   <!-- ──────────────────────────────────────── -->
-  <!-- SLIDE 12: TEAM -->
-  <!-- ──────────────────────────────────────── -->
-  <div class="slide" id="slide-12">
-    <div class="slide-inner">
-      <div class="eyebrow">Team</div>
-      <div class="slide-title">이 팀이 만들었습니다</div>
-      <div class="team-grid">
-        <div class="team-card">
-          <div class="team-avatar"><img src="./image/kim.png" alt="김지현"></div>
-          <div class="team-info">
-            <div class="team-name-row">
-              <span class="team-name">김지현</span>
-              <span class="team-dept">선강DX섹션</span>
-            </div>
-            <div class="team-works">
-              <div class="team-work-item">요구사항 구조화 및 온톨로지 설계</div>
-              <div class="team-work-item">LangGraph 기반 Q&A 자동화</div>
-              <div class="team-work-item">AI 목업 생성 파이프라인 구현</div>
-            </div>
-          </div>
-        </div>
-        <div class="team-card">
-          <div class="team-avatar"><img src="./image/heo.png" alt="허도원"></div>
-          <div class="team-info">
-            <div class="team-name-row">
-              <span class="team-name">허도원</span>
-              <span class="team-dept">선강DX섹션</span>
-            </div>
-            <div class="team-works">
-              <div class="team-work-item">MES 맞춤 템플릿 및 생성 규칙 설계</div>
-              <div class="team-work-item">도메인 특화 화면 생성 품질 고도화</div>
-              <div class="team-work-item">Gamma API 기반 PPT 내보내기 자동화</div>
-            </div>
-          </div>
-        </div>
-        <div class="team-card">
-          <div class="team-avatar"><img src="./image/shim.png" alt="심경보" ></div>
-          <div class="team-info">
-            <div class="team-name-row">
-              <span class="team-name">심경보</span>
-              <span class="team-dept">선강DX섹션</span>
-            </div>
-            <div class="team-works">
-              <div class="team-work-item">협업 중심 대시보드 UI 설계 및 구현</div>
-              <div class="team-work-item">핵심 화면 UX/UI 일관성 설계</div>
-              <div class="team-work-item">의사결정 속도를 높이는 사용자 경험 개선</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="slide-logo">PIXEL</div>
-      <div class="page-num">13 / 14</div>
-    </div>
-  </div>
-
-  <!-- ──────────────────────────────────────── -->
   <!-- SLIDE 13: CLOSING -->
   <!-- ──────────────────────────────────────── -->
   <div class="slide" id="slide-13">
@@ -2571,8 +2641,11 @@
   let current = 0;
 
   // ── feature animation state ──
+  let problemStep = -1;
   let featStep = 0;
   let impactStep = 0;
+  let impactMetricRevealed = false;
+  const problemCards = Array.from(document.querySelectorAll('#slide-02 .problem-card'));
   const featCards = [
     document.getElementById('feat-1'),
     document.getElementById('feat-2'),
@@ -2581,6 +2654,7 @@
     document.getElementById('feat-5'),
   ];
   const featHint = document.getElementById('features-hint');
+  const impactCards = Array.from(document.querySelectorAll('#slide-09 .effect-card'));
   const impactMetrics = Array.from(document.querySelectorAll('#slide-09 .countup'));
   const featVideoIds = ['feat1-video', 'feat2-video', 'feat3-video', 'feat4-video', 'feat5-video'];
   const featOverlayIds = ['feat1-overlay', 'feat2-overlay', 'feat3-overlay', 'feat4-overlay', 'feat5-overlay'];
@@ -2603,6 +2677,13 @@
 
   function getCurrentSlideId(idx = current) {
     return slides[idx] ? slides[idx].id : '';
+  }
+
+  function renderProblemCards() {
+    problemCards.forEach((card, index) => {
+      if (!card) return;
+      card.classList.toggle('active', index === problemStep);
+    });
   }
 
   function renderFeatureCarousel() {
@@ -2735,42 +2816,53 @@
     }
   }
 
-  function resetImpactMetrics() {
-    impactStep = 0;
-    impactMetrics.forEach((el) => {
+  function setImpactCardMetricState(card, hidden) {
+    const beforeValue = card.querySelector('.effect-before-value');
+    const afterValue = card.querySelector('.effect-after-value');
+    if (beforeValue && afterValue) {
+      beforeValue.classList.toggle('is-hidden', !hidden);
+      afterValue.classList.toggle('is-hidden', hidden);
+    }
+    card.querySelectorAll('.countup').forEach((el) => {
       const targetValue = Number(el.dataset.target ?? 0);
       const suffix = el.dataset.suffix ?? '';
       const prefix = el.dataset.prefix ?? '';
       el.textContent = `${prefix}${targetValue}${suffix}`;
-      el.classList.add('is-hidden');
+      el.classList.toggle('is-hidden', hidden);
     });
   }
 
-  function revealNextImpactMetric() {
-    if (impactStep >= impactMetrics.length) {
-      showSlide(current + 1);
-      return;
-    }
-
-    const el = impactMetrics[impactStep];
-    el.classList.remove('is-hidden');
-    animateCountValue(el, 900);
-    impactStep++;
+  function animateImpactCard(card) {
+    if (!card) return;
+    impactMetricRevealed = true;
+    setImpactCardMetricState(card, false);
+    card.querySelectorAll('.countup').forEach((el, index) => {
+      el.classList.remove('is-hidden');
+      setTimeout(() => animateCountValue(el, 900), index * 120);
+    });
   }
 
-  function hidePrevImpactMetric() {
-    if (impactStep <= 0) {
-      showSlide(current - 1);
-      return;
-    }
+  function renderImpactCards(direction = 'next') {
+    impactCards.forEach((card, index) => {
+      if (!card) return;
+      card.classList.remove('active', 'exit-left', 'exit-right');
+      if (index !== impactStep) {
+        setImpactCardMetricState(card, true);
+      }
+    });
 
-    impactStep--;
-    const el = impactMetrics[impactStep];
-    const targetValue = Number(el.dataset.target ?? 0);
-    const suffix = el.dataset.suffix ?? '';
-    const prefix = el.dataset.prefix ?? '';
-    el.textContent = `${prefix}${targetValue}${suffix}`;
-    el.classList.add('is-hidden');
+    const activeCard = impactCards[impactStep];
+    if (!activeCard) return;
+    setImpactCardMetricState(activeCard, !impactMetricRevealed);
+    activeCard.classList.add('active');
+    activeCard.classList.remove(direction === 'prev' ? 'exit-left' : 'exit-right');
+  }
+
+  function resetImpactCards() {
+    impactStep = 0;
+    impactMetricRevealed = false;
+    impactCards.forEach((card) => setImpactCardMetricState(card, true));
+    renderImpactCards('next');
   }
 
   // ── on-enter animations per slide ──
@@ -2785,6 +2877,8 @@
     if (slideId === 'slide-02') {
       const el = document.getElementById('count-hours');
       if (el) { el.textContent = '0'; setTimeout(() => countUp(el, 11, 1200), 300); }
+      problemStep = -1;
+      renderProblemCards();
     }
 
     if (slideId === 'slide-06') {
@@ -2794,7 +2888,7 @@
     }
 
     if (slideId === 'slide-09') {
-      resetImpactMetrics();
+      resetImpactCards();
     }
   }
 
@@ -2842,20 +2936,61 @@
   // ── handle next ──
   function handleNext() {
     const slideId = getCurrentSlideId();
+    if (slideId === 'slide-02') {
+      if (problemStep < problemCards.length - 1) {
+        problemStep++;
+        renderProblemCards();
+      } else {
+        showSlide(current + 1);
+      }
+      return;
+    }
     if (slideId === 'slide-06') { revealNextFeature(); return; }
-    if (slideId === 'slide-09') { revealNextImpactMetric(); return; }
+    if (slideId === 'slide-09') {
+      if (!impactMetricRevealed) {
+        animateImpactCard(impactCards[impactStep]);
+      } else if (impactStep < impactCards.length - 1) {
+        impactStep++;
+        impactMetricRevealed = false;
+        renderImpactCards('next');
+      } else {
+        showSlide(current + 1);
+      }
+      return;
+    }
     showSlide(current + 1);
   }
 
   // ── handle prev ──
   function handlePrev() {
+    if (getCurrentSlideId() === 'slide-02') {
+      if (problemStep > 0) {
+        problemStep--;
+        renderProblemCards();
+      } else if (problemStep === 0) {
+        problemStep = -1;
+        renderProblemCards();
+      } else {
+        showSlide(current - 1);
+      }
+      return;
+    }
     if (getCurrentSlideId() === 'slide-06' && featStep > 0) {
       featStep--;
       renderFeatureCarousel();
       return;
     }
     if (getCurrentSlideId() === 'slide-09') {
-      hidePrevImpactMetric();
+      if (impactMetricRevealed) {
+        impactMetricRevealed = false;
+        setImpactCardMetricState(impactCards[impactStep], true);
+      } else if (impactStep > 0) {
+        impactStep--;
+        impactMetricRevealed = true;
+        renderImpactCards('prev');
+      } else {
+        showSlide(current - 1);
+      }
       return;
     }
     showSlide(current - 1);
@@ -2863,6 +2998,10 @@
 
   // ── keyboard ──
   document.addEventListener('keydown', (e) => {
+    if (e.repeat && (e.key === 'ArrowRight' || e.key === 'ArrowLeft' || e.key === ' ')) {
+      e.preventDefault();
+      return;
+    }
     if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); handleNext(); }
     if (e.key === 'ArrowLeft') { e.preventDefault(); handlePrev(); }
     if (e.key === 'Escape') { showSlide(0); }
@@ -2879,7 +3018,9 @@
     if (dx > 50) handlePrev();
   });
 
+  renderProblemCards();
   renderFeatureCarousel();
+  renderImpactCards();
   updatePageNumbers();
   updateProgress();
 
