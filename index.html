@@ -1113,6 +1113,11 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    transition: opacity 0.3s ease;
+  }
+  .effect-summary.is-idle {
+    opacity: 0;
+    pointer-events: none;
   }
   .effect-card {
     position: absolute;
@@ -1132,6 +1137,9 @@
     transform: translateX(80px) scale(0.96);
     transition: transform 0.42s ease, opacity 0.42s ease, box-shadow 0.42s ease;
     pointer-events: none;
+  }
+  .effect-summary.is-idle .effect-card {
+    display: none;
   }
   .effect-card.active {
     opacity: 1;
@@ -1190,7 +1198,7 @@
     margin-bottom: 12px;
   }
   .effect-metric {
-    font-size: 36px;
+    font-size: 54px;
     font-weight: 700;
     color: var(--navy);
     line-height: 1.1;
@@ -2537,7 +2545,7 @@
             </div>
             <div class="journey-shot">
               <img src="./image/screenshot_10.png" alt="작업 스크린샷 10 반복">
-              <
+              
             </div>
             <div class="journey-shot">
               <img src="./image/screenshot_11.png" alt="작업 스크린샷 11 반복">
@@ -2789,8 +2797,13 @@
   }
 
   function renderImpactCards(direction = 'next') {
+    const impactSummary = document.querySelector('#slide-09 .effect-summary');
+    if (impactSummary) {
+      impactSummary.classList.toggle('is-idle', impactStep < 0);
+    }
     impactCards.forEach((card, index) => {
       if (!card) return;
+      card.style.display = impactStep < 0 ? 'none' : 'flex';
       card.classList.remove('active', 'exit-left', 'exit-right');
       if (index !== impactStep) {
         setImpactCardMetricState(card, true);
