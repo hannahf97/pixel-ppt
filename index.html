@@ -1559,25 +1559,12 @@
   <div id="progress"></div>
   <div id="nav-hint">← → 키로 이동 · 스페이스바로 다음</div>
 
-  <!-- ──────────────────────────────────────── -->
-  <!-- SLIDE INTRO: 영상 -->
-  <!-- ──────────────────────────────────────── -->
-  <div class="slide active" id="slide-intro" style="position:relative;">
-    <video id="intro-video" src="./video/영상시작.mp4" muted playsinline
-           style="width:100%; height:100%; object-fit:cover; display:block; pointer-events:none;"
-           onended="introVideoEnded()"></video>
-    <div id="intro-overlay" onclick="playIntroVideo()"
-         style="position:absolute; inset:0; z-index:1; pointer-events:auto; display:flex; align-items:center; justify-content:center; cursor:pointer; background:rgba(0,0,0,0.35); transition:opacity 0.3s;">
-      <div style="width:80px; height:80px; border-radius:50%; background:rgba(255,255,255,0.92); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 32px rgba(0,0,0,0.4);">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="#0B1F4B"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-      </div>
-    </div>
-  </div>
+  
 
   <!-- ──────────────────────────────────────── -->
   <!-- SLIDE 01: COVER -->
   <!-- ──────────────────────────────────────── -->
-  <div class="slide" id="slide-01">
+  <div class="slide active" id="slide-01">
     <div class="slide-inner">
       <div class="cover-tag">
         <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="#07A0A0"/></svg>
@@ -1623,6 +1610,21 @@
 
       <div class="slide-logo">PIXEL</div>
       <div class="page-num">01 / 14</div>
+    </div>
+  </div>
+
+  <!-- ──────────────────────────────────────── -->
+  <!-- SLIDE INTRO: 영상 -->
+  <!-- ──────────────────────────────────────── -->
+  <div class="slide" id="slide-intro" style="position:relative;">
+    <video id="intro-video" src="./video/인트로영상최종.mp4" playsinline
+           style="width:100%; height:100%; object-fit:cover; display:block; pointer-events:none;"
+           onended="introVideoEnded()"></video>
+    <div id="intro-overlay" onclick="playIntroVideo()"
+         style="position:absolute; inset:0; z-index:1; pointer-events:auto; display:flex; align-items:center; justify-content:center; cursor:pointer; background:rgba(0,0,0,0.35); transition:opacity 0.3s;">
+      <div style="width:80px; height:80px; border-radius:50%; background:rgba(255,255,255,0.92); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 32px rgba(0,0,0,0.4);">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="#0B1F4B"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      </div>
     </div>
   </div>
 
@@ -1726,13 +1728,6 @@
         <div style="position:absolute; top:15%; left:60%; z-index:1;">
           <div style="background:rgba(11,31,75,0.88); backdrop-filter:blur(6px); border-radius:16px; border-bottom-left-radius:4px; padding:18px 22px; max-width:380px;">
             <div style="font-size:25px; color:#fff; line-height:1.7;">피드백이 흩어져 있어서<br>어느 게 최신인지...</div>
-          </div>
-        </div>
-
-        <!-- 좌하단 말풍선 -->
-        <div style="position:absolute; bottom:12%; right:52%; z-index:1;">
-          <div style="background:rgba(11,31,75,0.88); backdrop-filter:blur(6px); border-radius:16px; border-top-right-radius:4px; padding:18px 22px; max-width:380px;">
-            <div style="font-size:25px; color:#fff; line-height:1.7;">이 파일이 최신본 맞나요?<br>비슷한 파일이 너무 많아서요</div>
           </div>
         </div>
 
@@ -2049,7 +2044,7 @@
       <div class="features-grid" id="features-grid">
         <div class="feature-card" id="feat-1">
           <div class="feature-img">
-            <video id="feat1-video" src="./video/화면생성.mp4" loop muted playsinline
+            <video id="feat1-video" src="./video/화면생성.mp4" muted playsinline
                    style="width:100%; height:100%; object-fit:cover; display:block; pointer-events:none;"></video>
             <div id="feat1-overlay" onclick="playFeatVideo('feat1-video','feat1-overlay')"
                  style="position:absolute; inset:0; z-index:1; pointer-events:auto; display:flex; align-items:center; justify-content:center; cursor:pointer; background:rgba(0,0,0,0.25); transition:opacity 0.25s;">
@@ -2065,7 +2060,7 @@
         </div>
         <div class="feature-card" id="feat-2">
           <div class="feature-img">
-            <video id="feat2-video" src="./video/ai수정.mp4" loop muted playsinline
+            <video id="feat2-video" src="./video/ai수정.mp4" muted playsinline
                    style="width:100%; height:100%; object-fit:cover; display:block; pointer-events:none;"></video>
             <div id="feat2-overlay" onclick="playFeatVideo('feat2-video','feat2-overlay')"
                  style="position:absolute; inset:0; z-index:1; pointer-events:auto; display:flex; align-items:center; justify-content:center; cursor:pointer; background:rgba(0,0,0,0.25); transition:opacity 0.25s;">
@@ -2081,7 +2076,7 @@
         </div>
         <div class="feature-card" id="feat-3">
           <div class="feature-img">
-            <video id="feat3-video" src="./video/버전비교최.mp4" loop muted playsinline
+            <video id="feat3-video" src="./video/버전비교최.mp4" muted playsinline
                    style="width:100%; height:100%; object-fit:cover; display:block; pointer-events:none;"></video>
             <div id="feat3-overlay" onclick="playFeatVideo('feat3-video','feat3-overlay')"
                  style="position:absolute; inset:0; z-index:1; pointer-events:auto; display:flex; align-items:center; justify-content:center; cursor:pointer; background:rgba(0,0,0,0.25); transition:opacity 0.25s;">
@@ -2098,7 +2093,7 @@
         </div>
         <div class="feature-card" id="feat-4">
           <div class="feature-img">
-            <video id="feat4-video" src="./video/리뷰변경.mp4" loop muted playsinline
+            <video id="feat4-video" src="./video/리뷰변경.mp4" muted playsinline
                    style="width:100%; height:100%; object-fit:cover; display:block; pointer-events:none;"></video>
             <div id="feat4-overlay" onclick="playFeatVideo('feat4-video','feat4-overlay')"
                  style="position:absolute; inset:0; z-index:1; pointer-events:auto; display:flex; align-items:center; justify-content:center; cursor:pointer; background:rgba(0,0,0,0.25); transition:opacity 0.25s;">
@@ -2114,7 +2109,7 @@
         </div>
         <div class="feature-card" id="feat-5">
           <div class="feature-img">
-            <video id="feat5-video" src="./video/피피티내보내.mp4" loop muted playsinline
+            <video id="feat5-video" src="./video/피피티내보내.mp4" muted playsinline
                    style="width:100%; height:100%; object-fit:cover; display:block; pointer-events:none;"></video>
             <div id="feat5-overlay" onclick="playFeatVideo('feat5-video','feat5-overlay')"
                  style="position:absolute; inset:0; z-index:1; pointer-events:auto; display:flex; align-items:center; justify-content:center; cursor:pointer; background:rgba(0,0,0,0.25); transition:opacity 0.25s;">
