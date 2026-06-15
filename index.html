@@ -19,6 +19,9 @@
     --white: #FFFFFF;
     --bg: #F7F9FC;
     --border: rgba(11,31,75,0.1);
+    --roadmap-phase-1: #E6EAF0;
+    --roadmap-phase-2: #AFC4DE;
+    --roadmap-phase-3: #0B1F4B;
   }
 
   html, body {
@@ -1473,9 +1476,9 @@
     padding: 20px 24px;
     background: var(--navy-light);
   }
-  .roadmap-phase-header.current {
-    background: var(--navy);
-  }
+  .roadmap-phase-header.phase-1 { background: var(--roadmap-phase-1); }
+  .roadmap-phase-header.phase-2 { background: var(--roadmap-phase-2); }
+  .roadmap-phase-header.phase-3 { background: var(--roadmap-phase-3); }
   .roadmap-phase-tag {
     font-size: 13px;
     font-weight: 700;
@@ -1484,13 +1487,17 @@
     margin-bottom: 6px;
   }
   .roadmap-phase-header .roadmap-phase-tag { color: var(--navy-sub); }
-  .roadmap-phase-header.current .roadmap-phase-tag { color: var(--cyan); }
+  .roadmap-phase-header.phase-1 .roadmap-phase-tag { color: #6F7C8F; }
+  .roadmap-phase-header.phase-2 .roadmap-phase-tag { color: var(--navy-mid); }
+  .roadmap-phase-header.phase-3 .roadmap-phase-tag { color: rgba(255,255,255,0.72); }
   .roadmap-phase-title {
     font-size: 27px;
     font-weight: 700;
   }
   .roadmap-phase-header .roadmap-phase-title { color: var(--navy); }
-  .roadmap-phase-header.current .roadmap-phase-title { color: var(--white); }
+  .roadmap-phase-header.phase-1 .roadmap-phase-title { color: #4F5D73; }
+  .roadmap-phase-header.phase-2 .roadmap-phase-title { color: var(--navy); }
+  .roadmap-phase-header.phase-3 .roadmap-phase-title { color: var(--white); }
   .roadmap-phase-body {
     padding: 20px 24px;
     flex: 1;
@@ -1816,7 +1823,8 @@
         <div class="cover-full-name">POSCO Intelligent eXperience Layout</div>
       </div>
       <div class="cover-tagline">
-        POSCO 제조 현장의 화면 설계,<br>AI가 11시간을 10분으로
+        AI가 도메인 지식을 기반으로 <br> 기존 화면 설계 방식을 다시 씁니다.
+        <!-- POSCO 제조 현장의 화면 설계,<br>AI가 11시간을 10분으로 -->
       </div>
       <div class="cover-desc">
         자연어 요건을 구조화하여 즉시 확인 가능한 목업으로 변환하는<br>AI 기반 화면 설계 자동화 플랫폼
@@ -2502,7 +2510,7 @@
 <div class="slide-title">확산 가능성 및 향후 계획</div>
 <div class="roadmap-flow">
 <div class="roadmap-phase">
-<div class="roadmap-phase-header current">
+<div class="roadmap-phase-header current phase-1">
 <div class="roadmap-phase-tag">현재 · Phase 1</div>
 <div class="roadmap-phase-title">파일럿 완성</div>
 </div>
@@ -2515,7 +2523,7 @@
 </div>
 </div>
 <div class="roadmap-phase">
-<div class="roadmap-phase-header">
+<div class="roadmap-phase-header phase-2">
 <div class="roadmap-phase-tag">단기 · Phase 2</div>
 <div class="roadmap-phase-title">품질 고도화</div>
 </div>
@@ -2527,7 +2535,7 @@
 </div>
 </div>
 <div class="roadmap-phase">
-<div class="roadmap-phase-header">
+<div class="roadmap-phase-header phase-3">
 <div class="roadmap-phase-tag">장기 · Phase 3</div>
 <div class="roadmap-phase-title">전사 표준화</div>
 </div>
