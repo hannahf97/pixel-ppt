@@ -1926,6 +1926,15 @@
           </div>
         </div>
       </div>
+      <div class="slide-logo">PIXEL</div>
+      <div class="page-num">02 / 14</div>
+    </div>
+  </div>
+
+  <div class="slide" id="slide-02b">
+    <div class="slide-inner">
+      <div class="eyebrow">Problem</div>
+      <div class="slide-title" style="margin-bottom:22px;">화면설계가 오래 걸리는 이유</div>
       <div class="problem-cards">
         <div class="problem-card">
           <div class="problem-card-visual">
@@ -1981,7 +1990,7 @@
         </div>
       </div>
       <div class="slide-logo">PIXEL</div>
-      <div class="page-num">02 / 14</div>
+      <div class="page-num">03 / 14</div>
     </div>
   </div>
 
@@ -2750,7 +2759,7 @@
   let featStep = 0;
   let impactStep = 0;
   let impactMetricRevealed = false;
-  const problemCards = Array.from(document.querySelectorAll('#slide-02 .problem-card'));
+  const problemCards = Array.from(document.querySelectorAll('#slide-02b .problem-card'));
   const featCards = [
     document.getElementById('feat-1'),
     document.getElementById('feat-2'),
@@ -2787,7 +2796,6 @@
   function renderProblemCards() {
     const problemHeader = document.querySelector('#slide-02 .problem-header');
     const problemBreakdown = document.querySelector('#slide-02 .problem-breakdown');
-    const problemCardsWrap = document.querySelector('#slide-02 .problem-cards');
     if (problemHeader) {
       problemHeader.classList.toggle('is-center', problemIntroStage < 3);
       problemHeader.classList.toggle('problem-stage-0', problemIntroStage === 0);
@@ -2796,9 +2804,6 @@
     }
     if (problemBreakdown) {
       problemBreakdown.classList.toggle('is-visible', problemIntroStage === 2);
-    }
-    if (problemCardsWrap) {
-      problemCardsWrap.classList.toggle('is-hidden', problemIntroStage < 3);
     }
     problemCards.forEach((card, index) => {
       if (!card) return;
@@ -3042,6 +3047,10 @@
       const el = document.getElementById('count-hours');
       if (el) { el.textContent = '0'; }
       problemIntroStage = 0;
+      renderProblemCards();
+    }
+
+    if (slideId === 'slide-02b') {
       problemStep = -1;
       renderProblemCards();
     }
@@ -3115,11 +3124,13 @@
       } else if (problemIntroStage === 1) {
         problemIntroStage = 2;
         renderProblemCards();
-      } else if (problemIntroStage === 2 && problemStep < problemCards.length - 1) {
-        problemIntroStage = 3;
-        problemStep = 0;
-        renderProblemCards();
-      } else if (problemStep < problemCards.length - 1) {
+      } else {
+        showSlide(current + 1);
+      }
+      return;
+    }
+    if (slideId === 'slide-02b') {
+      if (problemStep < problemCards.length - 1) {
         problemStep++;
         renderProblemCards();
       } else {
@@ -3150,6 +3161,20 @@
   // ── handle prev ──
   function handlePrev() {
     if (getCurrentSlideId() === 'slide-02') {
+      if (problemIntroStage === 2) {
+        problemIntroStage = 1;
+        renderProblemCards();
+      } else if (problemIntroStage === 1) {
+        problemIntroStage = 0;
+        const el = document.getElementById('count-hours');
+        if (el) el.textContent = '0';
+        renderProblemCards();
+      } else {
+        showSlide(current - 1);
+      }
+      return;
+    }
+    if (getCurrentSlideId() === 'slide-02b') {
       if (problemStep > 0) {
         problemStep--;
         renderProblemCards();
