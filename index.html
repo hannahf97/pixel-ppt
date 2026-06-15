@@ -376,12 +376,18 @@
   }
 
   .problem-cards {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 24px;
+    position: relative;
     flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1200px;
   }
   .problem-card {
+    position: absolute;
+    width: min(980px, 82vw);
     background: linear-gradient(180deg, #FFFFFF, #F8FBFF);
     border-radius: 22px;
     border: 1px solid rgba(11,31,75,0.08);
@@ -391,7 +397,28 @@
     gap: 22px;
     align-items: stretch;
     overflow: hidden;
+    opacity: 0;
+    transform: translateX(0) scale(0.76);
+    transition: transform 0.45s ease, opacity 0.45s ease, box-shadow 0.45s ease;
+    pointer-events: none;
     box-shadow: 0 16px 34px rgba(11,31,75,0.08);
+  }
+  .problem-card.active {
+    opacity: 1;
+    transform: translateX(0) scale(1.08);
+    z-index: 4;
+    pointer-events: auto;
+    box-shadow: 0 28px 62px rgba(11,31,75,0.16);
+  }
+  .problem-card.prev {
+    opacity: 0.2;
+    transform: translateX(-54%) scale(0.82) rotateY(12deg);
+    z-index: 3;
+  }
+  .problem-card.next {
+    opacity: 0.2;
+    transform: translateX(54%) scale(0.82) rotateY(-12deg);
+    z-index: 3;
   }
   .problem-card-visual {
     width: 100%;
@@ -740,6 +767,7 @@
     opacity: 1;
     transform: translateX(0) scale(1.51);
     z-index: 4;
+    pointer-events: auto;
     box-shadow: 0 34px 76px rgba(11,31,75,0.18);
   }
   .feature-card.prev,
@@ -1559,8 +1587,6 @@
   <div id="progress"></div>
   <div id="nav-hint">← → 키로 이동 · 스페이스바로 다음</div>
 
-  
-
   <!-- ──────────────────────────────────────── -->
   <!-- SLIDE 01: COVER -->
   <!-- ──────────────────────────────────────── -->
@@ -1617,15 +1643,9 @@
   <!-- SLIDE INTRO: 영상 -->
   <!-- ──────────────────────────────────────── -->
   <div class="slide" id="slide-intro" style="position:relative;">
-    <video id="intro-video" src="./video/인트로영상최종.mp4" playsinline
+    <video id="intro-video" src="./video/인트로영상최종.mp4" muted playsinline
            style="width:100%; height:100%; object-fit:cover; display:block; pointer-events:none;"
            onended="introVideoEnded()"></video>
-    <div id="intro-overlay" onclick="playIntroVideo()"
-         style="position:absolute; inset:0; z-index:1; pointer-events:auto; display:flex; align-items:center; justify-content:center; cursor:pointer; background:rgba(0,0,0,0.35); transition:opacity 0.3s;">
-      <div style="width:80px; height:80px; border-radius:50%; background:rgba(255,255,255,0.92); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 32px rgba(0,0,0,0.4);">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="#0B1F4B"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-      </div>
-    </div>
   </div>
 
   <!-- ──────────────────────────────────────── -->
@@ -1811,7 +1831,7 @@
             <span class="comp-tool-pain">필요하건 필요하지 않건, 무조건 수작업</span>
           </div>
           <div class="comp-tool-img">
-            <img src="./image/ui_ppt.png" alt="PPT 기존 방식"
+            <img src="./image/ppt_real2.png" alt="PPT 기존 방식"
                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
             <div class="comp-tool-img-placeholder" style="display:none;">
               <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#5A6A85" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
@@ -2045,12 +2065,14 @@
         <div class="feature-card" id="feat-1">
           <div class="feature-img">
             <video id="feat1-video" src="./video/화면생성.mp4" muted playsinline
-                   style="width:100%; height:100%; object-fit:cover; display:block; pointer-events:none;"></video>
-            <div id="feat1-overlay" onclick="playFeatVideo('feat1-video','feat1-overlay')"
-                 style="position:absolute; inset:0; z-index:1; pointer-events:auto; display:flex; align-items:center; justify-content:center; cursor:pointer; background:rgba(0,0,0,0.25); transition:opacity 0.25s;">
+                   onended="handleFeatureVideoEnded('feat1-video')"
+                   style="width:100%; height:100%; object-fit:cover; display:block;"></video>
+            <div id="feat1-overlay" onclick="playFeatureVideo('feat1-video','feat1-overlay')"
+                 style="position:absolute; inset:0; z-index:1; display:flex; align-items:center; justify-content:center; cursor:pointer; background:rgba(0,0,0,0.25); transition:opacity 0.25s;">
               <div style="width:52px; height:52px; border-radius:50%; background:rgba(255,255,255,0.92); display:flex; align-items:center; justify-content:center; box-shadow:0 4px 16px rgba(0,0,0,0.25);">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="#0B1F4B"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-              </div>            </div>
+              </div>
+            </div>
           </div>
           <div class="feature-body">
             <div class="feature-num">01</div>
@@ -2061,12 +2083,14 @@
         <div class="feature-card" id="feat-2">
           <div class="feature-img">
             <video id="feat2-video" src="./video/ai수정.mp4" muted playsinline
-                   style="width:100%; height:100%; object-fit:cover; display:block; pointer-events:none;"></video>
-            <div id="feat2-overlay" onclick="playFeatVideo('feat2-video','feat2-overlay')"
-                 style="position:absolute; inset:0; z-index:1; pointer-events:auto; display:flex; align-items:center; justify-content:center; cursor:pointer; background:rgba(0,0,0,0.25); transition:opacity 0.25s;">
+                   onended="handleFeatureVideoEnded('feat2-video')"
+                   style="width:100%; height:100%; object-fit:cover; display:block;"></video>
+            <div id="feat2-overlay" onclick="playFeatureVideo('feat2-video','feat2-overlay')"
+                 style="position:absolute; inset:0; z-index:1; display:flex; align-items:center; justify-content:center; cursor:pointer; background:rgba(0,0,0,0.25); transition:opacity 0.25s;">
               <div style="width:52px; height:52px; border-radius:50%; background:rgba(255,255,255,0.92); display:flex; align-items:center; justify-content:center; box-shadow:0 4px 16px rgba(0,0,0,0.25);">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="#0B1F4B"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-              </div>            </div>
+              </div>
+            </div>
           </div>
           <div class="feature-body">
             <div class="feature-num">02</div>
@@ -2077,11 +2101,12 @@
         <div class="feature-card" id="feat-3">
           <div class="feature-img">
             <video id="feat3-video" src="./video/버전비교최.mp4" muted playsinline
-                   style="width:100%; height:100%; object-fit:cover; display:block; pointer-events:none;"></video>
-            <div id="feat3-overlay" onclick="playFeatVideo('feat3-video','feat3-overlay')"
-                 style="position:absolute; inset:0; z-index:1; pointer-events:auto; display:flex; align-items:center; justify-content:center; cursor:pointer; background:rgba(0,0,0,0.25); transition:opacity 0.25s;">
+                   onended="handleFeatureVideoEnded('feat3-video')"
+                   style="width:100%; height:100%; object-fit:cover; display:block;"></video>
+            <div id="feat3-overlay" onclick="playFeatureVideo('feat3-video','feat3-overlay')"
+                 style="position:absolute; inset:0; z-index:1; display:flex; align-items:center; justify-content:center; cursor:pointer; background:rgba(0,0,0,0.25); transition:opacity 0.25s;">
               <div style="width:52px; height:52px; border-radius:50%; background:rgba(255,255,255,0.92); display:flex; align-items:center; justify-content:center; box-shadow:0 4px 16px rgba(0,0,0,0.25);">
-                <svg id="feat3-icon" width="20" height="20" viewBox="0 0 24 24" fill="#0B1F4B"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#0B1F4B"><polygon points="5 3 19 12 5 21 5 3"/></svg>
               </div>
             </div>
           </div>
@@ -2094,12 +2119,14 @@
         <div class="feature-card" id="feat-4">
           <div class="feature-img">
             <video id="feat4-video" src="./video/리뷰변경.mp4" muted playsinline
-                   style="width:100%; height:100%; object-fit:cover; display:block; pointer-events:none;"></video>
-            <div id="feat4-overlay" onclick="playFeatVideo('feat4-video','feat4-overlay')"
-                 style="position:absolute; inset:0; z-index:1; pointer-events:auto; display:flex; align-items:center; justify-content:center; cursor:pointer; background:rgba(0,0,0,0.25); transition:opacity 0.25s;">
+                   onended="handleFeatureVideoEnded('feat4-video')"
+                   style="width:100%; height:100%; object-fit:cover; display:block;"></video>
+            <div id="feat4-overlay" onclick="playFeatureVideo('feat4-video','feat4-overlay')"
+                 style="position:absolute; inset:0; z-index:1; display:flex; align-items:center; justify-content:center; cursor:pointer; background:rgba(0,0,0,0.25); transition:opacity 0.25s;">
               <div style="width:52px; height:52px; border-radius:50%; background:rgba(255,255,255,0.92); display:flex; align-items:center; justify-content:center; box-shadow:0 4px 16px rgba(0,0,0,0.25);">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="#0B1F4B"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-              </div>            </div>
+              </div>
+            </div>
           </div>
           <div class="feature-body">
             <div class="feature-num">04</div>
@@ -2110,12 +2137,14 @@
         <div class="feature-card" id="feat-5">
           <div class="feature-img">
             <video id="feat5-video" src="./video/피피티내보내.mp4" muted playsinline
-                   style="width:100%; height:100%; object-fit:cover; display:block; pointer-events:none;"></video>
-            <div id="feat5-overlay" onclick="playFeatVideo('feat5-video','feat5-overlay')"
-                 style="position:absolute; inset:0; z-index:1; pointer-events:auto; display:flex; align-items:center; justify-content:center; cursor:pointer; background:rgba(0,0,0,0.25); transition:opacity 0.25s;">
+                   onended="handleFeatureVideoEnded('feat5-video')"
+                   style="width:100%; height:100%; object-fit:cover; display:block;"></video>
+            <div id="feat5-overlay" onclick="playFeatureVideo('feat5-video','feat5-overlay')"
+                 style="position:absolute; inset:0; z-index:1; display:flex; align-items:center; justify-content:center; cursor:pointer; background:rgba(0,0,0,0.25); transition:opacity 0.25s;">
               <div style="width:52px; height:52px; border-radius:50%; background:rgba(255,255,255,0.92); display:flex; align-items:center; justify-content:center; box-shadow:0 4px 16px rgba(0,0,0,0.25);">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="#0B1F4B"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-              </div>            </div>
+              </div>
+            </div>
           </div>
           <div class="feature-body">
             <div class="feature-num">05</div>
@@ -2176,7 +2205,7 @@
           </div>
           <div class="effect-card-content">
             <div class="effect-card-copy">
-              <div class="effect-metric"><span class="accent countup" data-start="8" data-target="0" data-suffix="시간">0시간</span></div>
+              <div class="effect-metric"><span class="accent countup" data-start="8" data-target="0" data-suffix="시간">1분</span></div>
               <div class="effect-note">목업과 스펙을 바탕으로 설계서 산출물까지 자동 생성해 별도 문서 작성 단계를 없앱니다.</div>
             </div>
             <div class="effect-media">
@@ -2553,6 +2582,9 @@
   ];
   const featHint = document.getElementById('features-hint');
   const impactMetrics = Array.from(document.querySelectorAll('#slide-09 .countup'));
+  const featVideoIds = ['feat1-video', 'feat2-video', 'feat3-video', 'feat4-video', 'feat5-video'];
+  const featOverlayIds = ['feat1-overlay', 'feat2-overlay', 'feat3-overlay', 'feat4-overlay', 'feat5-overlay'];
+  let activeFeatureVideoId = null;
 
   function updatePageNumbers() {
     const total = slides.length;
@@ -2589,6 +2621,7 @@
         ? '마지막 기능입니다 → 한 번 더 누르면 다음 슬라이드로 이동합니다'
         : `${featStep + 1} / ${featCards.length} · → 키로 다음 기능 보기`;
     }
+
   }
 
   // ── count-up animation ──
@@ -2628,6 +2661,78 @@
     document.querySelectorAll('#slide-09 .countup').forEach((el, index) => {
       setTimeout(() => animateCountValue(el, 1100), index * 120);
     });
+  }
+
+  function resetFeatureVideos() {
+    featVideoIds.forEach((videoId, index) => {
+      const video = document.getElementById(videoId);
+      const overlay = document.getElementById(featOverlayIds[index]);
+      if (!video) return;
+      video.pause();
+      video.currentTime = 0;
+      if (overlay) {
+        overlay.style.opacity = '1';
+        overlay.style.pointerEvents = 'auto';
+      }
+    });
+    activeFeatureVideoId = null;
+  }
+
+  function exitFeatureFullscreen() {
+    if (document.fullscreenElement && document.exitFullscreen) {
+      document.exitFullscreen().catch(() => {});
+      return;
+    }
+    if (document.webkitFullscreenElement && document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    }
+  }
+
+  function playFeatureVideo(videoId, overlayId) {
+    if (getCurrentSlideId() !== 'slide-06') return;
+    const activeVideoId = featVideoIds[featStep];
+    if (videoId !== activeVideoId) return;
+    resetFeatureVideos();
+    const video = document.getElementById(videoId);
+    const overlay = document.getElementById(overlayId);
+    if (!video) return;
+    if (overlay) {
+      overlay.style.opacity = '0';
+      overlay.style.pointerEvents = 'none';
+    }
+    activeFeatureVideoId = videoId;
+    const requestFullscreen = video.requestFullscreen || video.webkitRequestFullscreen;
+    if (requestFullscreen) {
+      try {
+        const req = requestFullscreen.call(video);
+        if (req && typeof req.catch === 'function') req.catch(() => {});
+      } catch (_) {}
+    }
+    const playAttempt = video.play();
+    if (playAttempt && typeof playAttempt.catch === 'function') {
+      playAttempt.catch(() => {
+        if (overlay) {
+          overlay.style.opacity = '1';
+          overlay.style.pointerEvents = 'auto';
+        }
+        activeFeatureVideoId = null;
+      });
+    }
+  }
+
+  function handleFeatureVideoEnded(videoId) {
+    if (getCurrentSlideId() !== 'slide-06') return;
+    const videoIndex = featVideoIds.indexOf(videoId);
+    if (videoIndex === -1) return;
+    exitFeatureFullscreen();
+    activeFeatureVideoId = null;
+    resetFeatureVideos();
+    if (videoIndex < featCards.length - 1) {
+      featStep = videoIndex + 1;
+      renderFeatureCarousel();
+    } else {
+      showSlide(current + 1);
+    }
   }
 
   function resetImpactMetrics() {
@@ -2672,6 +2777,11 @@
   function onSlideEnter(idx) {
     const slideId = getCurrentSlideId(idx);
 
+    if (slideId === 'slide-intro') {
+      setTimeout(() => playIntroVideo(), 80);
+      return;
+    }
+
     if (slideId === 'slide-02') {
       const el = document.getElementById('count-hours');
       if (el) { el.textContent = '0'; setTimeout(() => countUp(el, 11, 1200), 300); }
@@ -2680,10 +2790,7 @@
     if (slideId === 'slide-06') {
       featStep = 0;
       renderFeatureCarousel();
-      const video = document.getElementById('feat3-video');
-      const overlay = document.getElementById('feat3-overlay');
-      if (video) { video.pause(); video.currentTime = 0; }
-      if (overlay) { overlay.style.opacity = '1'; overlay.style.pointerEvents = 'auto'; }
+      return;
     }
 
     if (slideId === 'slide-09') {
@@ -2693,6 +2800,10 @@
 
   // ── show slide ──
   function showSlide(idx) {
+    if (getCurrentSlideId() === 'slide-06') {
+      exitFeatureFullscreen();
+      resetFeatureVideos();
+    }
     slides[current].classList.remove('active');
     current = Math.max(0, Math.min(slides.length - 1, idx));
     slides[current].classList.add('active');
@@ -2714,49 +2825,19 @@
   // ── intro video ──
   function playIntroVideo() {
     const video = document.getElementById('intro-video');
-    const overlay = document.getElementById('intro-overlay');
     if (!video) return;
+    video.currentTime = 0;
     video.play();
-    overlay.style.opacity = '0';
-    overlay.style.pointerEvents = 'none';
   }
 
   function introVideoEnded() {
     const video = document.getElementById('intro-video');
-    const overlay = document.getElementById('intro-overlay');
-    if (video) video.pause();
-    if (overlay) { overlay.style.opacity = '1'; overlay.style.pointerEvents = 'auto'; }
+    if (video) {
+      video.pause();
+      video.currentTime = 0;
+    }
+    showSlide(current + 1);
   }
-
-  // ── feat video: 전체화면 재생 (공통) ──
-  let activeFeatVideoId = null;
-  let activeFeatOverlayId = null;
-
-  function playFeatVideo(videoId, overlayId) {
-    const video = document.getElementById(videoId);
-    if (!video) return;
-    activeFeatVideoId = videoId;
-    activeFeatOverlayId = overlayId;
-    const req = video.requestFullscreen || video.webkitRequestFullscreen || video.mozRequestFullScreen;
-    if (req) req.call(video);
-    video.play();
-  }
-
-  function onFeatFullscreenExit() {
-    const video = activeFeatVideoId ? document.getElementById(activeFeatVideoId) : null;
-    const overlay = activeFeatOverlayId ? document.getElementById(activeFeatOverlayId) : null;
-    if (video) { video.pause(); video.currentTime = 0; }
-    if (overlay) { overlay.style.opacity = '1'; overlay.style.pointerEvents = 'auto'; }
-    activeFeatVideoId = null;
-    activeFeatOverlayId = null;
-  }
-
-  document.addEventListener('fullscreenchange', () => {
-    if (!document.fullscreenElement) onFeatFullscreenExit();
-  });
-  document.addEventListener('webkitfullscreenchange', () => {
-    if (!document.webkitFullscreenElement) onFeatFullscreenExit();
-  });
 
   // ── handle next ──
   function handleNext() {
