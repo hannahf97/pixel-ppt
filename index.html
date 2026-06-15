@@ -860,7 +860,7 @@
   }
   .feature-card {
     position: absolute;
-    width: min(820px, 78vw);
+    width: min(760px, 72vw);
     background: linear-gradient(180deg, #FFFFFF, #F7FBFF);
     border-radius: 26px;
     border: 1px solid rgba(11,31,75,0.08);
@@ -872,36 +872,40 @@
     transform-origin: center center;
     transition: transform 0.45s ease, opacity 0.45s ease, box-shadow 0.45s ease;
     pointer-events: none;
+    visibility: hidden;
     box-shadow: 0 24px 54px rgba(11,31,75,0.12);
   }
   .feature-card.active {
     opacity: 1;
-    transform: translateX(0) scale(1.51);
-    z-index: 4;
+    transform: translateX(0) scale(1.42);
+    z-index: 10;
     pointer-events: auto;
+    visibility: visible;
     box-shadow: 0 34px 76px rgba(11,31,75,0.18);
   }
   .feature-card.prev,
   .feature-card.next {
     opacity: 0.5;
     z-index: 3;
+    visibility: visible;
   }
   .feature-card.prev {
-    transform: translateX(-50%) scale(0.8) rotateY(14deg);
+    transform: translateX(-46%) scale(0.76) rotateY(14deg);
   }
   .feature-card.next {
-    transform: translateX(50%) scale(0.8) rotateY(-14deg);
+    transform: translateX(46%) scale(0.76) rotateY(-14deg);
   }
   .feature-card.far-prev,
   .feature-card.far-next {
     opacity: 0.18;
     z-index: 2;
+    visibility: visible;
   }
   .feature-card.far-prev {
-    transform: translateX(-74%) scale(0.68);
+    transform: translateX(-68%) scale(0.64);
   }
   .feature-card.far-next {
-    transform: translateX(74%) scale(0.68);
+    transform: translateX(68%) scale(0.64);
   }
   .feature-img {
     width: 56%;
@@ -909,6 +913,30 @@
     overflow: hidden;
     position: relative;
     min-height: 360px;
+    cursor: pointer;
+  }
+  .feature-img video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+  }
+  .feature-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: rgba(0,0,0,0.25);
+    transition: opacity 0.25s ease;
+    pointer-events: auto;
+  }
+  .feature-card.active .feature-img,
+  .feature-card.active .feature-overlay {
+    pointer-events: auto;
     cursor: pointer;
   }
   .feature-img img {
@@ -2297,11 +2325,9 @@
       <div class="features-grid" id="features-grid">
         <div class="feature-card" id="feat-1">
           <div class="feature-img">
-            <video id="feat1-video" src="./video/화면생성.mp4" muted playsinline
-                   onended="handleFeatureVideoEnded('feat1-video')"
-                   style="width:100%; height:100%; object-fit:cover; display:block;"></video>
-            <div id="feat1-overlay" onclick="playFeatureVideo('feat1-video','feat1-overlay')"
-                 style="position:absolute; inset:0; z-index:1; display:flex; align-items:center; justify-content:center; cursor:pointer; background:rgba(0,0,0,0.25); transition:opacity 0.25s;">
+            <video id="feat1-video" src="./video/화면생성.mp4" muted playsinline preload="auto"
+                   onended="handleFeatureVideoEnded('feat1-video')"></video>
+            <div id="feat1-overlay" class="feature-overlay" onclick="playFeatureVideo('feat1-video','feat1-overlay')">
               <div style="width:52px; height:52px; border-radius:50%; background:rgba(255,255,255,0.92); display:flex; align-items:center; justify-content:center; box-shadow:0 4px 16px rgba(0,0,0,0.25);">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="#0B1F4B"><polygon points="5 3 19 12 5 21 5 3"/></svg>
               </div>
@@ -2315,11 +2341,9 @@
         </div>
         <div class="feature-card" id="feat-2">
           <div class="feature-img">
-            <video id="feat2-video" src="./video/ai수정.mp4" muted playsinline
-                   onended="handleFeatureVideoEnded('feat2-video')"
-                   style="width:100%; height:100%; object-fit:cover; display:block;"></video>
-            <div id="feat2-overlay" onclick="playFeatureVideo('feat2-video','feat2-overlay')"
-                 style="position:absolute; inset:0; z-index:1; display:flex; align-items:center; justify-content:center; cursor:pointer; background:rgba(0,0,0,0.25); transition:opacity 0.25s;">
+            <video id="feat2-video" src="./video/ai수정.mp4" muted playsinline preload="auto"
+                   onended="handleFeatureVideoEnded('feat2-video')"></video>
+            <div id="feat2-overlay" class="feature-overlay" onclick="playFeatureVideo('feat2-video','feat2-overlay')">
               <div style="width:52px; height:52px; border-radius:50%; background:rgba(255,255,255,0.92); display:flex; align-items:center; justify-content:center; box-shadow:0 4px 16px rgba(0,0,0,0.25);">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="#0B1F4B"><polygon points="5 3 19 12 5 21 5 3"/></svg>
               </div>
@@ -2333,11 +2357,9 @@
         </div>
         <div class="feature-card" id="feat-3">
           <div class="feature-img">
-            <video id="feat3-video" src="./video/버전비교최.mp4" muted playsinline
-                   onended="handleFeatureVideoEnded('feat3-video')"
-                   style="width:100%; height:100%; object-fit:cover; display:block;"></video>
-            <div id="feat3-overlay" onclick="playFeatureVideo('feat3-video','feat3-overlay')"
-                 style="position:absolute; inset:0; z-index:1; display:flex; align-items:center; justify-content:center; cursor:pointer; background:rgba(0,0,0,0.25); transition:opacity 0.25s;">
+            <video id="feat3-video" src="./video/버전비교최.mp4" muted playsinline preload="auto"
+                   onended="handleFeatureVideoEnded('feat3-video')"></video>
+            <div id="feat3-overlay" class="feature-overlay" onclick="playFeatureVideo('feat3-video','feat3-overlay')">
               <div style="width:52px; height:52px; border-radius:50%; background:rgba(255,255,255,0.92); display:flex; align-items:center; justify-content:center; box-shadow:0 4px 16px rgba(0,0,0,0.25);">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="#0B1F4B"><polygon points="5 3 19 12 5 21 5 3"/></svg>
               </div>
@@ -2351,11 +2373,9 @@
         </div>
         <div class="feature-card" id="feat-4">
           <div class="feature-img">
-            <video id="feat4-video" src="./video/리뷰변경.mp4" muted playsinline
-                   onended="handleFeatureVideoEnded('feat4-video')"
-                   style="width:100%; height:100%; object-fit:cover; display:block;"></video>
-            <div id="feat4-overlay" onclick="playFeatureVideo('feat4-video','feat4-overlay')"
-                 style="position:absolute; inset:0; z-index:1; display:flex; align-items:center; justify-content:center; cursor:pointer; background:rgba(0,0,0,0.25); transition:opacity 0.25s;">
+            <video id="feat4-video" src="./video/리뷰변경.mp4" muted playsinline preload="auto"
+                   onended="handleFeatureVideoEnded('feat4-video')"></video>
+            <div id="feat4-overlay" class="feature-overlay" onclick="playFeatureVideo('feat4-video','feat4-overlay')">
               <div style="width:52px; height:52px; border-radius:50%; background:rgba(255,255,255,0.92); display:flex; align-items:center; justify-content:center; box-shadow:0 4px 16px rgba(0,0,0,0.25);">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="#0B1F4B"><polygon points="5 3 19 12 5 21 5 3"/></svg>
               </div>
@@ -2369,11 +2389,9 @@
         </div>
         <div class="feature-card" id="feat-5">
           <div class="feature-img">
-            <video id="feat5-video" src="./video/피피티내보내.mp4" muted playsinline
-                   onended="handleFeatureVideoEnded('feat5-video')"
-                   style="width:100%; height:100%; object-fit:cover; display:block;"></video>
-            <div id="feat5-overlay" onclick="playFeatureVideo('feat5-video','feat5-overlay')"
-                 style="position:absolute; inset:0; z-index:1; display:flex; align-items:center; justify-content:center; cursor:pointer; background:rgba(0,0,0,0.25); transition:opacity 0.25s;">
+            <video id="feat5-video" src="./video/피피티내보내.mp4" muted playsinline preload="auto"
+                   onended="handleFeatureVideoEnded('feat5-video')"></video>
+            <div id="feat5-overlay" class="feature-overlay" onclick="playFeatureVideo('feat5-video','feat5-overlay')">
               <div style="width:52px; height:52px; border-radius:50%; background:rgba(255,255,255,0.92); display:flex; align-items:center; justify-content:center; box-shadow:0 4px 16px rgba(0,0,0,0.25);">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="#0B1F4B"><polygon points="5 3 19 12 5 21 5 3"/></svg>
               </div>
@@ -2453,7 +2471,7 @@
           </div>
           <div class="effect-card-content media-bottom">
             <div class="effect-card-copy">
-              <div class="effect-metric">유사도 <span class="accent countup" data-target="90" data-suffix="%">90%</span></div>
+              <div class="effect-metric">Vision Embedding(CLIP) 유사도 <span class="accent countup" data-target="90" data-suffix="%">90%</span></div>
               <div class="effect-note">기존 설계 결과물과 높은 수준으로 유사한 초안을 빠르게 생성해 수정 부담을 낮춥니다.</div>
             </div>
             <div class="effect-media compare vertical">
@@ -2773,6 +2791,7 @@
   const featVideoIds = ['feat1-video', 'feat2-video', 'feat3-video', 'feat4-video', 'feat5-video'];
   const featOverlayIds = ['feat1-overlay', 'feat2-overlay', 'feat3-overlay', 'feat4-overlay', 'feat5-overlay'];
   let activeFeatureVideoId = null;
+  let featureVideosPrimed = false;
 
   function updatePageNumbers() {
     const total = slides.length;
@@ -2886,6 +2905,18 @@
     activeFeatureVideoId = null;
   }
 
+  function primeFeatureVideos() {
+    if (featureVideosPrimed) return;
+    featVideoIds.forEach((videoId) => {
+      const video = document.getElementById(videoId);
+      if (!video) return;
+      try {
+        video.load();
+      } catch (_) {}
+    });
+    featureVideosPrimed = true;
+  }
+
   function exitFeatureFullscreen() {
     if (document.fullscreenElement && document.exitFullscreen) {
       document.exitFullscreen().catch(() => {});
@@ -2897,7 +2928,6 @@
   }
 
   function playFeatureVideo(videoId, overlayId) {
-    if (getCurrentSlideId() !== 'slide-06') return;
     const videoIndex = featVideoIds.indexOf(videoId);
     if (videoIndex === -1) return;
     if (featStep !== videoIndex) {
@@ -2915,49 +2945,64 @@
       overlay.style.pointerEvents = 'none';
     }
     activeFeatureVideoId = videoId;
-    const playAttempt = video.play();
     const requestFullscreen = video.requestFullscreen || video.webkitRequestFullscreen;
-    if (playAttempt && typeof playAttempt.catch === 'function') {
-      playAttempt.catch(() => {
-        if (overlay) {
-          overlay.style.display = 'flex';
-          overlay.style.opacity = '1';
-          overlay.style.pointerEvents = 'auto';
-        }
-        activeFeatureVideoId = null;
-      });
-      playAttempt.then(() => {
-        if (requestFullscreen) {
-          try {
-            const req = requestFullscreen.call(video);
-            if (req && typeof req.catch === 'function') req.catch(() => {});
-          } catch (_) {}
-        }
-      });
+    const startPlayback = () => {
+      const playAttempt = video.play();
+      if (playAttempt && typeof playAttempt.catch === 'function') {
+        playAttempt.catch(() => {
+          if (overlay) {
+            overlay.style.display = 'flex';
+            overlay.style.opacity = '1';
+            overlay.style.pointerEvents = 'auto';
+          }
+          activeFeatureVideoId = null;
+        });
+        playAttempt.then(() => {
+          if (requestFullscreen) {
+            try {
+              const req = requestFullscreen.call(video);
+              if (req && typeof req.catch === 'function') req.catch(() => {});
+            } catch (_) {}
+          }
+        });
+        return;
+      }
+      if (requestFullscreen) {
+        try {
+          const req = requestFullscreen.call(video);
+          if (req && typeof req.catch === 'function') req.catch(() => {});
+        } catch (_) {}
+      }
+    };
+
+    if (video.readyState < 2) {
+      const onReady = () => {
+        video.removeEventListener('canplay', onReady);
+        startPlayback();
+      };
+      video.addEventListener('canplay', onReady, { once: true });
+      try {
+        video.load();
+      } catch (_) {
+        startPlayback();
+      }
       return;
     }
-    if (requestFullscreen) {
-      try {
-        const req = requestFullscreen.call(video);
-        if (req && typeof req.catch === 'function') req.catch(() => {});
-      } catch (_) {}
-    }
+
+    startPlayback();
   }
 
   function bindFeatureVideoClicks() {
     featVideoIds.forEach((videoId, index) => {
       const overlayId = featOverlayIds[index];
-      const overlay = document.getElementById(overlayId);
       const video = document.getElementById(videoId);
       const viewport = video ? (video.closest('.feature-img') || video) : null;
-      if (overlay) {
-        overlay.addEventListener('click', () => playFeatureVideo(videoId, overlayId));
-      }
-      if (viewport) {
+      if (viewport && !viewport.dataset.bound) {
         viewport.addEventListener('click', (event) => {
           if (event.target && event.target.closest && event.target.closest(`#${overlayId}`)) return;
           playFeatureVideo(videoId, overlayId);
         });
+        viewport.dataset.bound = 'true';
       }
     });
   }
@@ -3057,6 +3102,7 @@
 
     if (slideId === 'slide-06') {
       featStep = 0;
+      primeFeatureVideos();
       resetFeatureVideos();
       renderFeatureCarousel();
       return;
