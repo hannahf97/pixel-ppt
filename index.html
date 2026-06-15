@@ -283,7 +283,7 @@
   }
   .team-avatar {
     width: 100%;
-    flex: 0 0 72%;
+    flex: 0 0 420px;
     min-height: 0;
     border-radius: 12px;
     background: #E8EDF5;
@@ -293,7 +293,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: top center;
+    object-position: center top;
   }
   .team-info {
     padding: 10px 4px 0;
@@ -301,10 +301,13 @@
     flex-direction: column;
     gap: 4px;
     flex-shrink: 0;
+    align-items: center;
+    text-align: center;
   }
   .team-name-row {
     display: flex;
     align-items: baseline;
+    justify-content: center;
     gap: 8px;
   }
   .team-role-badge {
@@ -332,6 +335,7 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
+    align-items: center;
   }
   .team-work-item {
     font-size: 13px;
@@ -340,6 +344,7 @@
     align-items: flex-start;
     gap: 8px;
     line-height: 1.5;
+    text-align: center;
   }
   .team-work-item::before {
     content: '';
@@ -397,46 +402,34 @@
     gap: 22px;
     align-items: stretch;
     overflow: hidden;
-    transform: translate(0, 0) scale(1);
-    transition: transform 0.48s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.48s ease;
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+    transition: opacity 0.32s ease, transform 0.42s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.42s ease;
     box-shadow: 0 16px 34px rgba(11,31,75,0.08);
     transform-origin: center center;
+    pointer-events: none;
+  }
+  .problem-card.revealed {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
   }
   .problem-card.active {
-    transform: translate(var(--problem-focus-x), var(--problem-focus-y)) scale(1.18);
-    box-shadow: 0 34px 70px rgba(11,31,75,0.18);
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 26px 54px rgba(11,31,75,0.14);
     z-index: 5;
-  }
-  .problem-card:nth-child(1) {
-    --problem-focus-x: 260px;
-    --problem-focus-y: 150px;
-  }
-  .problem-card:nth-child(2) {
-    --problem-focus-x: -260px;
-    --problem-focus-y: 150px;
-  }
-  .problem-card:nth-child(3) {
-    --problem-focus-x: 260px;
-    --problem-focus-y: -150px;
-  }
-  .problem-card:nth-child(4) {
-    --problem-focus-x: -260px;
-    --problem-focus-y: -150px;
   }
   .problem-card-visual {
     width: 100%;
     height: 100%;
     min-height: 210px;
-    border-radius: 16px;
     overflow: hidden;
-    background: linear-gradient(135deg, #DCE7F5, #EAF6F6);
-    border: 1px solid rgba(11,31,75,0.06);
   }
   .problem-card-visual img {
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
   }
   .problem-card-copy {
     display: flex;
@@ -801,6 +794,7 @@
     overflow: hidden;
     position: relative;
     min-height: 360px;
+    cursor: pointer;
   }
   .feature-img img {
     width: 100%; height: 100%;
@@ -1911,7 +1905,7 @@
       <div class="eyebrow">Research · 현업 담당자</div>
       <div style="display:flex; align-items:baseline; gap:16px; margin-bottom:24px;">
         <div class="slide-title" style="margin-bottom:0;">현업의 입장</div>
-        <div style="font-size:13px; color:var(--navy-sub); font-weight:400;">현업 담당자 인터뷰 설문 기반</div>
+        <div style="font-size:13px; color:var(--navy-sub); font-weight:400;">현업 담당자 3명 인터뷰 설문 기반</div>
       </div>
 
       <!-- 캐릭터 배경 + 말풍선 오버레이 -->
@@ -2642,6 +2636,7 @@
   function renderProblemCards() {
     problemCards.forEach((card, index) => {
       if (!card) return;
+      card.classList.toggle('revealed', index <= problemStep);
       card.classList.toggle('active', index === problemStep);
     });
   }
@@ -2712,6 +2707,7 @@
       video.pause();
       video.currentTime = 0;
       if (overlay) {
+        overlay.style.display = 'flex';
         overlay.style.opacity = '1';
         overlay.style.pointerEvents = 'auto';
       }
@@ -2731,34 +2727,68 @@
 
   function playFeatureVideo(videoId, overlayId) {
     if (getCurrentSlideId() !== 'slide-06') return;
-    const activeVideoId = featVideoIds[featStep];
-    if (videoId !== activeVideoId) return;
-    resetFeatureVideos();
+    const videoIndex = featVideoIds.indexOf(videoId);
+    if (videoIndex === -1) return;
+    if (featStep !== videoIndex) {
+      featStep = videoIndex;
+      renderFeatureCarousel();
+    }
     const video = document.getElementById(videoId);
     const overlay = document.getElementById(overlayId);
     if (!video) return;
+    resetFeatureVideos();
+    video.currentTime = 0;
     if (overlay) {
+      overlay.style.display = 'none';
       overlay.style.opacity = '0';
       overlay.style.pointerEvents = 'none';
     }
     activeFeatureVideoId = videoId;
+    const playAttempt = video.play();
     const requestFullscreen = video.requestFullscreen || video.webkitRequestFullscreen;
+    if (playAttempt && typeof playAttempt.catch === 'function') {
+      playAttempt.catch(() => {
+        if (overlay) {
+          overlay.style.display = 'flex';
+          overlay.style.opacity = '1';
+          overlay.style.pointerEvents = 'auto';
+        }
+        activeFeatureVideoId = null;
+      });
+      playAttempt.then(() => {
+        if (requestFullscreen) {
+          try {
+            const req = requestFullscreen.call(video);
+            if (req && typeof req.catch === 'function') req.catch(() => {});
+          } catch (_) {}
+        }
+      });
+      return;
+    }
     if (requestFullscreen) {
       try {
         const req = requestFullscreen.call(video);
         if (req && typeof req.catch === 'function') req.catch(() => {});
       } catch (_) {}
     }
-    const playAttempt = video.play();
-    if (playAttempt && typeof playAttempt.catch === 'function') {
-      playAttempt.catch(() => {
-        if (overlay) {
-          overlay.style.opacity = '1';
-          overlay.style.pointerEvents = 'auto';
-        }
-        activeFeatureVideoId = null;
-      });
-    }
+  }
+
+  function bindFeatureVideoClicks() {
+    featVideoIds.forEach((videoId, index) => {
+      const overlayId = featOverlayIds[index];
+      const overlay = document.getElementById(overlayId);
+      const video = document.getElementById(videoId);
+      const viewport = video ? (video.closest('.feature-img') || video) : null;
+      if (overlay) {
+        overlay.addEventListener('click', () => playFeatureVideo(videoId, overlayId));
+      }
+      if (viewport) {
+        viewport.addEventListener('click', (event) => {
+          if (event.target && event.target.closest && event.target.closest(`#${overlayId}`)) return;
+          playFeatureVideo(videoId, overlayId);
+        });
+      }
+    });
   }
 
   function handleFeatureVideoEnded(videoId) {
@@ -2824,7 +2854,7 @@
   }
 
   function resetImpactCards() {
-    impactStep = 0;
+    impactStep = -1;
     impactMetricRevealed = false;
     impactCards.forEach((card) => setImpactCardMetricState(card, true));
     renderImpactCards('next');
@@ -2851,6 +2881,7 @@
 
     if (slideId === 'slide-06') {
       featStep = 0;
+      resetFeatureVideos();
       renderFeatureCarousel();
       return;
     }
@@ -2916,7 +2947,11 @@
     }
     if (slideId === 'slide-06') { revealNextFeature(); return; }
     if (slideId === 'slide-09') {
-      if (!impactMetricRevealed) {
+      if (impactStep < 0) {
+        impactStep = 0;
+        impactMetricRevealed = false;
+        renderImpactCards('next');
+      } else if (!impactMetricRevealed) {
         animateImpactCard(impactCards[impactStep]);
       } else if (impactStep < impactCards.length - 1) {
         impactStep++;
@@ -2957,6 +2992,10 @@
         impactStep--;
         impactMetricRevealed = true;
         renderImpactCards('prev');
+      } else if (impactStep === 0) {
+        impactStep = -1;
+        impactMetricRevealed = false;
+        renderImpactCards('prev');
       } else {
         showSlide(current - 1);
       }
@@ -2990,6 +3029,7 @@
   renderProblemCards();
   renderFeatureCarousel();
   renderImpactCards();
+  bindFeatureVideoClicks();
   updatePageNumbers();
   updateProgress();
 
